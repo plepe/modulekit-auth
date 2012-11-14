@@ -34,7 +34,7 @@ function auth_ldap_authenticate($username, $password, $options=array()) {
   if($result['count']==0)
     return null;
 
-  if(!($result=ldap_bind($ldapconfig['conn'], "uid={$username},{$ldapconfig['userdn']}", $password)))
+  if(!ldap_bind($ldapconfig['conn'], "uid={$username},{$ldapconfig['userdn']}", $password))
     return false;
 
   return array(
