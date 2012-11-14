@@ -2,5 +2,8 @@
 function authenticate($username, $password, $options=array()) {
   $ret=call_hooks("authenticate", $username, $password, $options);
 
-  print_r($ret);
+  if(!sizeof($ret))
+    return false;
+
+  return $ret[0];
 }
