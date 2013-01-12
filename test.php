@@ -8,6 +8,9 @@ if(isset($_REQUEST['username'])) {
   $auth_result=$auth->authenticate($_REQUEST['username'], $_REQUEST['password']);
 }
 
+if(isset($_REQUEST['auth'])&&($_REQUEST['auth']=="logout"))
+  $auth->clear_authentication();
+
 print "Userdata: <pre>\n";
 print_r($auth->current_user());
 print "</pre><hr/>\n";
@@ -35,5 +38,7 @@ if(isset($auth_result)) {
     Password: <input type='password' name='password' /><br/>
     <input type='submit' value='Login'>
     </form>
+
+    <a href='test.php?auth=logout'>Logout</a>
   </body>
 </html>

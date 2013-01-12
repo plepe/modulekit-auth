@@ -65,4 +65,9 @@ class Auth {
       return $errors;
     return false;
   }
+
+  function clear_authentication() {
+    unset($_SESSION['auth_current_user']);
+    $this->current_user=new Auth_User(null, null, array("name"=>"Anonymous"));
+  }
 }
