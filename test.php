@@ -1,5 +1,12 @@
 <?php include "conf.php"; /* load a local configuration */ ?>
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
+<?
+$auth=new Auth();
+
+print "Userdata: <pre>\n";
+print_r($auth->current_user());
+print "</pre><hr/>\n";
+?>
 <html>
   <head>
     <title>Framework Example</title>

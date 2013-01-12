@@ -1,4 +1,10 @@
 <?
 $id="modulekit-auth";
 
-$depend=array("hooks");
+$depend=array();
+
+$include=array(
+  'php'=>array(
+    "inc/*.php",
+  ),
+);
