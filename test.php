@@ -3,9 +3,23 @@
 <?
 $auth=new Auth();
 
+if(isset($_REQUEST['username'])) {
+  $auth_result=$auth->authenticate($_REQUEST['username'], $_REQUEST['password']);
+}
+
 print "Userdata: <pre>\n";
 print_r($auth->current_user());
 print "</pre><hr/>\n";
+
+if(isset($auth_result)) {
+  if($auth_result===false) {
+    print "Cannot login!<br/>\n";
+  }
+  elseif($auth_result!==true) {
+    print "Cannot login: ".implode("; ", $auth_result)."<br/>\n";
+  }
+}
+
 ?>
 <html>
   <head>
@@ -15,5 +29,10 @@ print "</pre><hr/>\n";
     <?php print modulekit_include_css(); /* prints all css-includes */ ?>
   </head>
   <body>
+    <form method='post'>
+    Username: <input type='text' name='username' value='' autofocus /><br/>
+    Password: <input type='password' name='password' /><br/>
+    <input type='submit' value='Login'>
+    </form>
   </body>
 </html>
