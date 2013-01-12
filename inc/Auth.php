@@ -9,7 +9,14 @@ class Auth {
       $this->config=$auth_config;
     }
 
-    $this->current_user=new Auth_User(null, null, array("name"=>"Anonymous"));
+    if(isset($_SESSION['auth_current_user'])) {
+      $d=$_SESSION['auth_current_user'];
+
+      $this->current_user=new Auth_User($d[0], $d[1], $d[2]);
+    }
+    else {
+      $this->current_user=new Auth_User(null, null, array("name"=>"Anonymous"));
+    }
   }
 
   function current_user() {
@@ -45,6 +52,7 @@ class Auth {
 
       if(is_array($result)) {
         $this->current_user=new Auth_User($username, $domain, $result);
+        $_SESSION['auth_current_user']=array($username, $domain, $result);
 
         return true;
       }
