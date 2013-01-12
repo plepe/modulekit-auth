@@ -8,6 +8,11 @@ $include=array(
     "inc/*.php",
   ),
 );
+$default_include=array(
+  'php'=>array(
+    "*.php",
+  ),
+);
 
 if(!function_exists("modulekit_auth_check_modules")) {
   function modulekit_auth_check_modules() {

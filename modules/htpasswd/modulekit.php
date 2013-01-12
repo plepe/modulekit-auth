@@ -1,0 +1,2 @@
+<?
+$id="modulekit-auth-htpasswd";
