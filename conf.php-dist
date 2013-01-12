@@ -1,0 +1,9 @@
+<?
+$auth_config=array(
+  'domains'=>array(
+    'default'=>array(
+      'type'=>"htpasswd",
+      'file'=>".htpasswd"
+    ),
+  ),
+);
