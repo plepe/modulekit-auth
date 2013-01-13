@@ -1,0 +1,9 @@
+Diverse authentication modules for modulekit. The following authentication types are supported:
+
+=== htpasswd ===
+Configuration:
+* file: Relative/Absolute path to a .htpasswd file
+
+Notes:
+Additional fields in the .htpasswd file are supported; the 3rd field is assumed to be the full name of the user, the 4th his/her email address. E.g.
+john:SyTGdf8WV4yv2:John Doe:john.doe@example.com
