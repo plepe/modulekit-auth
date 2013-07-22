@@ -44,4 +44,41 @@ function auth_ldap_authenticate($username, $password, $options=array()) {
   );
 }
 
+function auth_ldap_get_group($groupname, $options=array()) {
+  global $ldapconfig;
+  $ret=null;
+
+  if(!$groupname)
+    return;
+
+  if(!isset($ldapconfig)) {
+    print "\$ldapconfig not defined, please add to conf.php";
+    return null;
+  }
+
+  if(!isset($ldapconfig['conn'])) {
+    $ldapconfig['conn']=ldap_connect($ldapconfig['host']);
+    ldap_set_option($ldapconfig['conn'], LDAP_OPT_PROTOCOL_VERSION, 3);
+  }
+
+  $r=ldap_list($ldapconfig['conn'], $ldapconfig['groupdn'], "cn={$groupname}", array("displayname", "memberuid"));
+  if(!$r)
+    return false;
+
+  $result=ldap_get_entries($ldapconfig['conn'], $r);
+
+  if($result['count']==0)
+    return null;
+
+  $members=$result[0]['memberuid'];
+  unset($members['count']);
+
+  return array(
+    "groupname"=>$groupname,
+    "name"=>$result[0]['displayname'][0],
+    "members"=>$members,
+  );
+}
+
 register_hook("authenticate", "auth_ldap_authenticate");
+register_hook("auth_get_group", "auth_ldap_get_group");

@@ -7,3 +7,12 @@ function authenticate($username, $password, $options=array()) {
 
   return $ret[0];
 }
+
+function auth_get_group($groupname, $options=array()) {
+  $ret=call_hooks("auth_get_group", $groupname, $options);
+
+  if(!sizeof($ret))
+    return array();
+
+  return $ret[0];
+}
