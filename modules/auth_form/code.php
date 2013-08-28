@@ -40,15 +40,20 @@ class auth_form {
   }
 
   function show_status() {
-    $user = $this->auth->current_user();
+    if($this->auth->is_logged_in()) {
+      $user = $this->auth->current_user();
 
-    if($user->username === null)
+      return "Logged in as {$user->name()}.";
+    }
+    else {
       return "Not logged in.";
-    else
-      return "Logged in as {$user->name()}";
+    }
   }
 
   function show_form() {
+    if($this->auth->is_logged_in())
+      return "";
+
     $ret  = "<form method='post'>\n";
     $ret .= "<ul>\n";
     if ($this->form) {
