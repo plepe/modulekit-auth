@@ -23,6 +23,10 @@ class Auth {
     return $this->current_user;
   }
 
+  function is_logged_in() {
+    return isset($_SESSION['auth_current_user']);
+  }
+
   function domains() {
     if(isset($this->domains))
       return $this->domains;
