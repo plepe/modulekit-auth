@@ -8,6 +8,9 @@ class Auth_User {
   }
 
   function name() {
+    if($this->username === null)
+      return "Anonymous";
+
     return $this->username;
   }
 }
