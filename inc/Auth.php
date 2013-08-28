@@ -44,20 +44,22 @@ class Auth {
     return $this->domains;
   }
 
-  function authenticate($username, $password, $options=array()) {
+  function authenticate($username, $password, $domain=null, $options=array()) {
     $errors=array();
 
-    foreach($this->domains() as $domain=>$domain_object) {
-      $result=$domain_object->authenticate($username, $password, $options);
+    foreach($this->domains() as $d=>$domain_object) {
+      if(($d === null) || ($d == $domain)) {
+	$result=$domain_object->authenticate($username, $password, $options);
 
-      if(is_array($result)) {
-        $this->current_user=new Auth_User($username, $domain, $result);
-        $_SESSION['auth_current_user']=array($username, $domain, $result);
+	if(is_array($result)) {
+	  $this->current_user=new Auth_User($username, $domain_object, $result);
+	  $_SESSION['auth_current_user']=array($username, $d, $result);
 
-        return true;
-      }
-      elseif(is_string($result)) {
-        $errors[]="Domain '{$domain}': {$result}";
+	  return true;
+	}
+	elseif(is_string($result)) {
+	  $errors[]="Domain '{$d}': {$result}";
+	}
       }
     }
 
