@@ -56,7 +56,7 @@ class Auth {
 	$result=$domain_object->authenticate($username, $password, $options);
 
 	if(is_array($result)) {
-	  $this->current_user=new Auth_User($username, $domain_object, $result);
+	  $this->current_user=new Auth_User($username, $d, $result);
 	  $_SESSION['auth_current_user']=array($username, $d, $result);
 
 	  return true;

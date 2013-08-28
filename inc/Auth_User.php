@@ -7,6 +7,13 @@ class Auth_User {
     $this->data=$data;
   }
 
+  function id() {
+    if($this->username === null)
+      return "";
+
+    return "{$this->username}:{$this->domain}";
+  }
+
   function name() {
     if($this->username === null)
       return "Anonymous";
