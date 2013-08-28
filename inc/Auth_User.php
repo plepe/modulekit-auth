@@ -6,4 +6,8 @@ class Auth_User {
     $this->domain=$domain;
     $this->data=$data;
   }
+
+  function name() {
+    return $this->username;
+  }
 }
