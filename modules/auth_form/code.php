@@ -29,10 +29,23 @@ class auth_form {
     }
 
     $this->form = new form("auth_form", $this->form_def);
+
+    if($this->form->is_complete()) {
+      $data = $this->form->get_data();
+
+      $this->auth_result =
+	$this->auth->authenticate($data['username'], $data['password'],
+        (isset($data['domain'])?$data['domain']:null));
+    }
   }
 
   function show_status() {
-    return "Not logged in.";
+    $user = $this->auth->current_user();
+
+    if($user->username === null)
+      return "Not logged in.";
+    else
+      return "Logged in as {$user->name()}";
   }
 
   function show_form() {
@@ -40,6 +53,13 @@ class auth_form {
     $ret .= "<ul>\n";
     if ($this->form) {
       $ret .= "  <li>Login:\n";
+
+      if($this->auth_result === false) {
+	$ret .= "  <div class='field_errors'>\n";
+	$ret .= "Username or Password wrong\n";
+	$ret .= "  </div>\n";
+      }
+
       $ret .= $this->form->show();
       $ret .= "<input type='submit' value='Login'>\n";
       $ret .= "  </li>\n";
