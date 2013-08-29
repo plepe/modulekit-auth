@@ -11,7 +11,7 @@ class Auth_User {
     if($this->username === null)
       return "";
 
-    return "{$this->username}:{$this->domain}";
+    return "{$this->username}@{$this->domain}";
   }
 
   function name() {
