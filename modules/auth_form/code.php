@@ -46,11 +46,19 @@ class auth_form {
       return "Logged in as {$user->name()}.";
     }
     else {
-      return "Not logged in.";
+      if(class_exists("Page_login")) {
+	$return="&return=";
+	if(sizeof($_GET))
+	  $return="&return=".urlencode(url_params($_GET));
+
+	return "<a href='?page=login$return'>Login.</a>";
+      }
+      else
+	return "Not logged in.";
     }
   }
 
-  function show_form() {
+  function show_form($return) {
     if($this->auth->is_logged_in())
       return "";
 
@@ -69,6 +77,11 @@ class auth_form {
       $ret .= "<input type='submit' value='Login'>\n";
       $ret .= "  </li>\n";
     }
+
+    if($return !== null) {
+      $ret .= "<li><a href='?{$return}'>Continue anonymously</a>\n";
+    }
+
     $ret .= "</ul>\n";
     $ret .= "</form>\n";
 

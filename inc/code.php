@@ -16,3 +16,16 @@ function auth_get_group($groupname, $options=array()) {
 
   return $ret[0];
 }
+
+function url_params($a, $prefix="") {
+  $ret=array();
+
+  if(!$a)
+    return null;
+
+  foreach($a as $k=>$v) {
+    $ret[]=urlencode($k)."=".urlencode($v);
+  }
+
+  return implode("&amp;", $ret);
+}
