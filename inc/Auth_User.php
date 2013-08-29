@@ -20,4 +20,20 @@ class Auth_User {
 
     return $this->username;
   }
+
+  function access($what) {
+    if(!$what)
+      return true;
+
+    if(is_array($what)) {
+      foreach($what as $w)
+        if($this->access($w))
+	  return true;
+    }
+
+    if($what === $this->id())
+      return true;
+
+    return false;
+  }
 }

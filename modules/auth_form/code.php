@@ -43,7 +43,15 @@ class auth_form {
     if($this->auth->is_logged_in()) {
       $user = $this->auth->current_user();
 
-      return "Logged in as {$user->name()}.";
+      $ret  = "Logged in as {$user->name()}.";
+
+      if(class_exists("Page_logout")) {
+	$return="&return=";
+	if(sizeof($_GET))
+	  $return="&return=".urlencode(url_params($_GET));
+
+        return $ret . " <a href='?page=logout$return'>Logout.</a>";
+      }
     }
     else {
       if(class_exists("Page_login")) {
