@@ -98,4 +98,49 @@ class Auth {
 
     return null;
   }
+
+  function group_members($group) {
+    if(!isset($this->config['groups']))
+      return array();
+
+    if(isset($this->config['groups'][$group])) {
+      $conf_group=$this->config['groups'][$group];
+
+      if(is_string($conf_group)) {
+	return $this->group_members($conf_group);
+      }
+
+      if(is_array($conf_group)) {
+	$ret=array();
+	foreach($conf_group as $g)
+	  $ret=array_merge($ret, $this->group_members($g));
+
+	return $ret;
+      }
+
+      return array();
+    }
+
+    if(preg_match("/^&(.*)@(.*)$/", $group, $m)) {
+      foreach($this->domains() as $d=>$domain_object) {
+	if(($m[2] === null) || ($d == $m[2])) {
+	  $members=$domain_object->group_members($m[1]);
+
+	  if(!$members)
+	    return array();
+
+	  foreach($members as $i=>$m)
+	    $members[$i]="{$m}@{$d}";
+
+          return $members;
+	}
+      }
+    }
+
+    if(preg_match("/^(.*)@(.*)$/", $group, $m)) {
+      return array($group);
+    }
+
+    return array();
+  }
 }

@@ -49,4 +49,26 @@ class Auth_ldap extends Auth_default {
       "email"=>$result[0]['mail'][0],
     );
   }
+
+  function group_members($group) {
+    $this->connect();
+    $ret=null;
+
+    if(!$group)
+      return;
+
+    $r=ldap_list($this->connection, $this->config['groupdn'], "cn={$group}", array("displayname", "memberuid"));
+    if(!$r)
+      return false;
+
+    $result=ldap_get_entries($this->connection, $r);
+
+    if($result['count']==0)
+      return null;
+
+    $members=$result[0]['memberuid'];
+    unset($members['count']);
+
+    return $members;
+  }
 }

@@ -64,4 +64,8 @@ class Auth_htpasswd extends Auth_default {
 
     return null;
   }
+
+  function group_members($group) {
+    return array();
+  }
 }
