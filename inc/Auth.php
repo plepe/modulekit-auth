@@ -52,7 +52,7 @@ class Auth {
     $errors=array();
 
     foreach($this->domains() as $d=>$domain_object) {
-      if(($d === null) || ($d == $domain)) {
+      if(($domain === null) || ($d == $domain)) {
 	$result=$domain_object->authenticate($username, $password, $options);
 
 	if(is_array($result)) {
