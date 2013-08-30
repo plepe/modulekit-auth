@@ -76,4 +76,26 @@ class Auth {
     unset($_SESSION['auth_current_user']);
     $this->current_user=new Auth_User(null, null, array("name"=>"Anonymous"));
   }
+
+  function get_user($id) {
+    $id=explode("@", $id);
+    $username=$id[0];
+    if(sizeof($id)==1)
+      $domain=null;
+    else
+      $domain=$id[1];
+
+    $domains=$this->domains();
+
+    foreach($domains as $d=>$domain_object) {
+      if(($domain === null) || ($d == $domain)) {
+	$user=$domain_object->get_user($username);
+
+	if($user)
+	  return new Auth_User($username, $d, $user);
+      }
+    }
+
+    return null;
+  }
 }
