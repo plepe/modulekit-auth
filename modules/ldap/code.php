@@ -31,7 +31,7 @@ class Auth_ldap extends Auth_default {
     if(!ldap_bind($this->connection, "uid={$username},{$this->config['userdn']}", $password))
       return false;
 
-    return true;
+    return $ret;
   }
 
   function get_user($username) {
