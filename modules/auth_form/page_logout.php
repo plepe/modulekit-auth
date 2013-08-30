@@ -8,6 +8,9 @@ class Page_logout extends Page {
 
     $auth_form->auth->clear_authentication();
 
-    return "Logged out.<p><a href='?{$this->param['return']}'>Continue</a>";
+    if(isset($this->param['return']))
+      page_reload($this->param['return']);
+
+    return "<p>Logged out.<p><a href='?{$this->param['return']}'>Continue</a>";
   }
 }

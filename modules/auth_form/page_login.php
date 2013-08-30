@@ -7,7 +7,10 @@ class Page_login extends Page {
     global $auth_form;
 
     if($auth_form->auth->is_logged_in()) {
-      print "<p><a href='?{$this->param['return']}'>Continue</a>";
+      if(isset($this->param['return']))
+	page_reload($this->param['return']);
+
+      return "<p><a href='?{$this->param['return']}'>Continue</a>";
     }
 
     return $auth_form->show_form($this->param['return']);
