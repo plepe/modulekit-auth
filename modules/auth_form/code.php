@@ -13,6 +13,7 @@ class auth_form {
       'username'	=>array(
         'name'		=>"Username",
 	'type'		=>"text",
+	'html_attributes'=>array("autofocus"=>true),
       ),
       'password'	=>array(
         'name'		=>"Password",
