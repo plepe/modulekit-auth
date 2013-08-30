@@ -100,10 +100,18 @@ class Auth {
   }
 
   function group_members($group) {
-    if(!isset($this->config['groups']))
-      return array();
+    $groups=explode(";", $group);
+    if(sizeof($groups)>1) {
+      $ret=array();
 
-    if(isset($this->config['groups'][$group])) {
+      foreach($groups as $group)
+	$ret=array_merge($ret, $this->group_members($group));
+
+      return $ret;
+    }
+
+    if(isset($this->config['groups']) &&
+       isset($this->config['groups'][$group])) {
       $conf_group=$this->config['groups'][$group];
 
       if(is_string($conf_group)) {
@@ -142,5 +150,17 @@ class Auth {
     }
 
     return array();
+  }
+
+  function access($group, $user=null) {
+    if(!$group)
+      return true;
+
+    if(!$user)
+      $user=$this->current_user();
+
+    $members=$this->group_members($group);
+
+    return in_array($user->id(), $members);
   }
 }
