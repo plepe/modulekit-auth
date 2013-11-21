@@ -28,7 +28,11 @@ function auth_ldap_authenticate($username, $password, $options=array()) {
     ldap_set_option($ldapconfig['conn'], LDAP_OPT_PROTOCOL_VERSION, 3);
   }
 
-  $r=ldap_list($ldapconfig['conn'], $ldapconfig['userdn'], "uid={$username}", array("displayname", "mail"));
+  $fields = array("displayname", "mail");
+  if(isset($options['fields']))
+    $fields = array_unique(array_merge($fields, $options['fields']));
+
+  $r=ldap_list($ldapconfig['conn'], $ldapconfig['userdn'], "uid={$username}", $fields);
   $result=ldap_get_entries($ldapconfig['conn'], $r);
 
   if($result['count']==0)
@@ -37,11 +41,16 @@ function auth_ldap_authenticate($username, $password, $options=array()) {
   if(!ldap_bind($ldapconfig['conn'], "uid={$username},{$ldapconfig['userdn']}", $password))
     return false;
 
-  return array(
+  $user_data = array(
     "username"=>$username,
     "name"=>$result[0]['displayname'][0],
     "email"=>$result[0]['mail'][0],
   );
+
+  if(isset($options['fields'])) foreach($options['fields'] as $field)
+    $user_data[$field] = $result[0][$field][0];
+
+  return $user_data;
 }
 
 register_hook("authenticate", "auth_ldap_authenticate");
