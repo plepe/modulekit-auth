@@ -18,6 +18,16 @@ class Auth_User {
     if($this->username === null)
       return "Anonymous";
 
+    if(isset($this->data['name']))
+      return $this->data['name'];
+
     return $this->username;
+  }
+
+  function email() {
+    if(isset($this->data['email']))
+      return $this->data['email'];
+
+    return null;
   }
 }
