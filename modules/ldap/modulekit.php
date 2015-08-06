@@ -1,4 +1,4 @@
-<?
+<?php
 $id="modulekit-auth-ldap";
 
 $depend=array("hooks", "modulekit-auth");

@@ -1,4 +1,4 @@
-<?
+<?php
 // .htpasswd file may have additional fields:
 // user_name:password hash:Full Name:E-Mail
 // e.g.

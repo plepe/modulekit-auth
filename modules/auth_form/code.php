@@ -1,4 +1,4 @@
-<?
+<?php
 class auth_form {
   function __construct($auth) {
     $this->auth = $auth;

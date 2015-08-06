@@ -1,4 +1,4 @@
-<?
+<?php
 // username and domain are null for the anonymous user
 class Auth_User {
   function __construct($username, $domain, $data) {

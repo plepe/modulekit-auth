@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 config: array(
   'host'=>      "ldap.example.com",

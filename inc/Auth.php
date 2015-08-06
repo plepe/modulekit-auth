@@ -1,4 +1,4 @@
-<?
+<?php
 class Auth {
   function __construct($config=null) {
     if($config) {

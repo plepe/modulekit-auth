@@ -1,4 +1,4 @@
-<?
+<?php
 /* Add this to conf.php:
 
 $ldapconfig=array(
