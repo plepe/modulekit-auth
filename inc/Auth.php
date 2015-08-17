@@ -61,8 +61,15 @@ class Auth {
 	$result=$domain_object->authenticate($username, $password, $options);
 
 	if(is_array($result)) {
-	  $this->current_user=new Auth_User($username, $d, $result);
-	  $_SESSION['auth_current_user']=array($username, $d, $result);
+	  $user = new Auth_User($username, $d, $result);
+
+	  if(array_key_exists('require-group', $this->config)) {
+	    if(!$this->access($this->config['require-group'], $user))
+	      return false;
+	  }
+
+	  $this->current_user = $user;
+	  $_SESSION['auth_current_user'] = array($username, $d, $result);
 
 	  return true;
 	}
