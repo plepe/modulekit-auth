@@ -171,6 +171,9 @@ class Auth {
     if(!$user)
       $user=$this->current_user();
 
+    if($group === true)
+      return ($user->id() !== "");
+
     $members=$this->group_members($group);
 
     return in_array($user->id(), $members);
