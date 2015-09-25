@@ -25,6 +25,9 @@ class Auth_ldap extends Auth_default {
 
     $ret=$this->get_user($username);
 
+    if(!$password)
+      return false;
+
     if(!$ret)
       return false;
 
