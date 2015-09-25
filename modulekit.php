@@ -1,7 +1,9 @@
 <?php
 $id="modulekit-auth";
 
-$depend=array();
+$depend=array(
+  'hooks',
+);
 
 $include=array(
   'php'=>array(
