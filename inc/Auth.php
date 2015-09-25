@@ -181,7 +181,7 @@ class Auth {
 
   function http_authenticate() {
     if(isset($_SERVER['PHP_AUTH_USER']) &&
-       $this->authenticate($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])) {
+       ($this->authenticate($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) === true)) {
       return true;
     }
     else {
