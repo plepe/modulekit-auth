@@ -9,10 +9,10 @@ class AuthDisplay {
     $ret  = "<div class='auth_display'>\n";
     if($this->auth->is_logged_in()) {
       $ret .= htmlspecialchars($this->auth->current_user()->name());
-      $ret .= " Logout";
+      $ret .= " <a href='auth.php?logout'>Logout</a>";
     }
     else {
-      $ret .= " Login";
+      $ret .= " <a href='auth.php'>Login</a>";
     }
     $ret .= "</div>\n";
 
