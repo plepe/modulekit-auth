@@ -178,4 +178,16 @@ class Auth {
 
     return in_array($user->id(), $members);
   }
+
+  function http_authenticate() {
+    if(isset($_SERVER['PHP_AUTH_USER']) &&
+       $this->authenticate($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])) {
+      return true;
+    }
+    else {
+      header('WWW-Authenticate: Basic realm="My Realm"');
+      header('HTTP/1.0 401 Unauthorized');
+      exit();
+    }
+  }
 }
