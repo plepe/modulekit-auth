@@ -68,4 +68,29 @@ class Auth_htpasswd extends Auth_default {
   function group_members($group) {
     return array();
   }
+
+  function users() {
+    @$f=fopen($this->config['file'], "r");
+    if(!$f) {
+      $error=error_get_last();
+      return $error['message'];
+    }
+
+    $ret=array();
+    while($row=fgets($f)) {
+      $row=trim($row);
+      $row=explode(":", $row);
+      $data = array();
+
+      if(isset($row[2]))
+        $data['name'] = $row[2];
+      if(isset($row[3]))
+        $data['email'] = $row[3];
+
+      $ret[] = new Auth_User($row[0], $this->id, $data);
+    }
+    fclose($f);
+
+    return $ret;
+  }
 }
