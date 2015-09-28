@@ -8,7 +8,7 @@ if(isset($_REQUEST['username'])) {
   $auth_result=$auth->authenticate($_REQUEST['username'], $_REQUEST['password']);
 }
 
-if(isset($_REQUEST['auth'])&&($_REQUEST['auth']=="logout"))
+if(isset($_REQUEST['logout']))
   $auth->clear_authentication();
 
 print "Userdata: <pre>\n";
@@ -37,6 +37,7 @@ if(isset($auth_result)) {
     Username: <input type='text' name='username' value='' autofocus /><br/>
     Password: <input type='password' name='password' /><br/>
     <input type='submit' value='Login'>
+    <input type='submit' name='logout' value='Logout'>
     </form>
     <?php
     print "Users:\n";
