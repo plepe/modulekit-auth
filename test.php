@@ -38,6 +38,12 @@ if(isset($auth_result)) {
     Password: <input type='password' name='password' /><br/>
     <input type='submit' value='Login'>
     </form>
+    <?php
+    print "Users:\n";
+    print "<pre>\n";
+    print_r($auth->users());
+    print "</pre>\n";
+    ?>
 
     <a href='test.php?auth=logout'>Logout</a>
   </body>
