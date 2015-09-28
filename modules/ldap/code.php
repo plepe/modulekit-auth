@@ -7,8 +7,8 @@ config: array(
 );
 */
 class Auth_ldap extends Auth_default {
-  function __construct($config) {
-    parent::__construct($config);
+  function __construct($id, $config) {
+    parent::__construct($id, $config);
     $this->connection=null;
   }
 

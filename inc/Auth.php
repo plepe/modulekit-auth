@@ -45,7 +45,7 @@ class Auth {
       modulekit_load(array($domain_config['type']));
 
       if(class_exists($class))
-        $this->domains[$domain]=new $class($domain_config);
+        $this->domains[$domain]=new $class($domain, $domain_config);
     }
 
     return $this->domains;

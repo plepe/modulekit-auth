@@ -1,6 +1,7 @@
 <?php
 class Auth_default {
-  function __construct($config) {
+  function __construct($id, $config) {
+    $this->id = $id;
     $this->config = $config;
   }
 

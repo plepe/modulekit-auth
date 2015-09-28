@@ -4,8 +4,8 @@
 // e.g.
 // john:SyTGdf8WV4yv2:John Doe:john.doe@example.com
 class Auth_htpasswd extends Auth_default {
-  function __construct($config) {
-    parent::__construct($config);
+  function __construct($id, $config) {
+    parent::__construct($id, $config);
   }
 
   function authenticate($username, $password, $options=array()) {
