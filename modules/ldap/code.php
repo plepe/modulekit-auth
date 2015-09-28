@@ -46,11 +46,13 @@ class Auth_ldap extends Auth_default {
     if($result['count']==0)
       return null;
 
-    return array(
-      "username"=>$username,
-      "name"=>$result[0]['displayname'][0],
-      "email"=>$result[0]['mail'][0],
-    );
+    return new Auth_User(
+      $username,
+      $this->id,
+      array(
+	"name"=>$result[0]['displayname'][0],
+	"email"=>$result[0]['mail'][0],
+      ));
   }
 
   function group_members($group) {
@@ -93,8 +95,7 @@ class Auth_ldap extends Auth_default {
 	array(
 	  "name"=>$r['displayname'][0],
 	  "email"=>$r['mail'][0],
-	)
-      );
+	));
     }
 
     return $ret;

@@ -10,9 +10,7 @@ class Auth {
     }
 
     if(isset($_SESSION['auth_current_user'])) {
-      $d=$_SESSION['auth_current_user'];
-
-      $this->current_user=new Auth_User($d[0], $d[1], $d[2]);
+      $this->current_user = $_SESSION['auth_current_user'];
     }
     else {
       $this->current_user=new Auth_User(null, null, array("name"=>"Anonymous"));
@@ -58,23 +56,21 @@ class Auth {
 
     foreach($this->domains() as $d=>$domain_object) {
       if(($domain === null) || ($d == $domain)) {
-	$result=$domain_object->authenticate($username, $password, $options);
+	$user = $domain_object->authenticate($username, $password, $options);
 
-	if(is_array($result)) {
-	  $user = new Auth_User($username, $d, $result);
-
+	if(is_string($user)) {
+	  $errors[]="Domain '{$d}': {$user}";
+	}
+	elseif($user) {
 	  if(array_key_exists('require-group', $this->config)) {
 	    if(!$this->access($this->config['require-group'], $user))
 	      return false;
 	  }
 
 	  $this->current_user = $user;
-	  $_SESSION['auth_current_user'] = array($username, $d, $result);
+	  $_SESSION['auth_current_user'] = $user;
 
 	  return true;
-	}
-	elseif(is_string($result)) {
-	  $errors[]="Domain '{$d}': {$result}";
 	}
       }
     }
@@ -104,7 +100,7 @@ class Auth {
 	$user=$domain_object->get_user($username);
 
 	if($user)
-	  return new Auth_User($username, $d, $user);
+	  return $user;
       }
     }
 
