@@ -46,11 +46,13 @@ class Auth_ldap extends Auth_default {
     if($result['count']==0)
       return null;
 
-    return array(
-      "username"=>$username,
-      "name"=>$result[0]['displayname'][0],
-      "email"=>$result[0]['mail'][0],
-    );
+    return new Auth_User(
+      $username,
+      $this->id,
+      array(
+	"name"=>$result[0]['displayname'][0],
+	"email"=>$result[0]['mail'][0],
+      ));
   }
 
   function group_members($group) {
@@ -73,5 +75,23 @@ class Auth_ldap extends Auth_default {
     unset($members['count']);
 
     return $members;
+  }
+
+  function users() {
+    $this->connect();
+    $ret = null;
+
+    $r = ldap_search($this->connection, $this->config['userdn'], 'objectClass=Person', array("uid"));
+    if(!$r)
+      return false;
+
+    $result = ldap_get_entries($this->connection, $r);
+    unset($result['count']);
+
+    foreach($result as $r) {
+      $ret[] = $r['uid'][0];
+    }
+
+    return $ret;
   }
 }
