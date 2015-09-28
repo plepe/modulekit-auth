@@ -81,7 +81,7 @@ class Auth_ldap extends Auth_default {
     $this->connect();
     $ret = null;
 
-    $r = ldap_search($this->connection, $this->config['userdn'], 'objectClass=Person', array("uid", "displayname", "mail"));
+    $r = ldap_search($this->connection, $this->config['userdn'], 'objectClass=Person', array("uid"));
     if(!$r)
       return false;
 
@@ -89,13 +89,7 @@ class Auth_ldap extends Auth_default {
     unset($result['count']);
 
     foreach($result as $r) {
-      $ret[] = new Auth_User(
-	$r['uid'][0],
-	$this->id,
-	array(
-	  "name"=>$r['displayname'][0],
-	  "email"=>$r['mail'][0],
-	));
+      $ret[] = $r['uid'][0];
     }
 
     return $ret;

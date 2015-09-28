@@ -83,14 +83,8 @@ class Auth_htpasswd extends Auth_default {
     while($row=fgets($f)) {
       $row=trim($row);
       $row=explode(":", $row);
-      $data = array();
 
-      if(isset($row[2]))
-        $data['name'] = $row[2];
-      if(isset($row[3]))
-        $data['email'] = $row[3];
-
-      $ret[] = new Auth_User($row[0], $this->id, $data);
+      $ret[] = $row[0];
     }
     fclose($f);
 
