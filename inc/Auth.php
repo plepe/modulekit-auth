@@ -160,6 +160,22 @@ class Auth {
     return array();
   }
 
+  /**
+   * return list of usernames of all domains
+   * @return string[] list of usernames, including domain name (e.g.
+   *   user@domain)
+   */
+  function users() {
+    $ret = array();
+
+    foreach($this->domains() as $d=>$domain_object) {
+      foreach($domain_object->users() as $user)
+	$ret[] = "{$user}@{$d}";
+    }
+
+    return $ret;
+  }
+
   function access($group, $user=null) {
     if(!$group)
       return true;
