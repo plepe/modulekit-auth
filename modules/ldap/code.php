@@ -74,4 +74,29 @@ class Auth_ldap extends Auth_default {
 
     return $members;
   }
+
+  function users() {
+    $this->connect();
+    $ret = null;
+
+    $r = ldap_search($this->connection, $this->config['userdn'], 'objectClass=Person', array("uid", "displayname", "mail"));
+    if(!$r)
+      return false;
+
+    $result = ldap_get_entries($this->connection, $r);
+    unset($result['count']);
+
+    foreach($result as $r) {
+      $ret[] = new Auth_User(
+	$r['uid'][0],
+	$this->id,
+	array(
+	  "name"=>$r['displayname'][0],
+	  "email"=>$r['mail'][0],
+	)
+      );
+    }
+
+    return $ret;
+  }
 }
