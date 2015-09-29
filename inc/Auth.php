@@ -107,8 +107,15 @@ class Auth {
     return null;
   }
 
-  function group_members($group) {
-    $groups=explode(";", $group);
+  /**
+   * List all group members of the given group(s).
+   * @param string|string[] Group or groups. A list of groups may be passed as array or as concatenated string, joined by ';'. Groups can by references from the $auth_config array (simple string), users (e.g. 'user1@default'), domain groups (e.g. '&group1@default') or all users of domain ('*@default').p
+   * @return string[] List of users including their domain (e.g. 'user1@default').
+   */
+  function group_members($groups) {
+    if(!is_array($groups))
+      $groups=explode(";", $groups);
+
     if(sizeof($groups)>1) {
       $ret=array();
 
