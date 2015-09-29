@@ -119,8 +119,12 @@ class Auth {
     if(sizeof($groups)>1) {
       $ret=array();
 
-      foreach($groups as $group)
-	$ret=array_merge($ret, $this->group_members($group));
+      foreach($groups as $group) {
+	$list = $this->group_members($group);
+
+	if(is_array($list))
+	  $ret = array_merge($ret, $list);
+      }
 
       return $ret;
     }
