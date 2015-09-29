@@ -27,7 +27,8 @@ $auth_config=array(
 // groups my also be specified as 'user1@default' (where 'user1@default' is the
 // only member) or '&group@default', where the domain is queried for the member
 // list. You can also concatenate two or more users/groups together by
-// separating by ';', e.g. 'user1@default;&group@default'
+// separating by ';', e.g. 'user1@default;&group@default'. Use '*@default' to
+// specify all users from the given domain.
 //
 // To create .htpasswd file, use
 // > htpasswd -c -d .htpasswd USERNAME

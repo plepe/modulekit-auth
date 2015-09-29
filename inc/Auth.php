@@ -140,7 +140,10 @@ class Auth {
     if(preg_match("/^&(.*)@(.*)$/", $group, $m)) {
       foreach($this->domains() as $d=>$domain_object) {
 	if(($m[2] === null) || ($d == $m[2])) {
-	  $members=$domain_object->group_members($m[1]);
+	  if($m[1] == "*")
+	    $members=$domain_object->users();
+	  else
+	    $members=$domain_object->group_members($m[1]);
 
 	  if(!$members)
 	    return array();
