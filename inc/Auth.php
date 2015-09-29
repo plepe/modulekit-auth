@@ -129,6 +129,7 @@ class Auth {
       return $ret;
     }
 
+    $group = $groups[0];
     if(isset($this->config['groups']) &&
        isset($this->config['groups'][$group])) {
       $conf_group=$this->config['groups'][$group];
