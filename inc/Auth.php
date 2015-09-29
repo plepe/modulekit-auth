@@ -152,10 +152,7 @@ class Auth {
     if(preg_match("/^&(.*)@(.*)$/", $group, $m)) {
       foreach($this->domains() as $d=>$domain_object) {
 	if(($m[2] === null) || ($d == $m[2])) {
-	  if($m[1] == "*")
-	    $members=$domain_object->users();
-	  else
-	    $members=$domain_object->group_members($m[1]);
+	  $members=$domain_object->group_members($m[1]);
 
 	  if(!$members)
 	    return array();
@@ -169,7 +166,22 @@ class Auth {
     }
 
     if(preg_match("/^(.*)@(.*)$/", $group, $m)) {
-      return array($group);
+      if($m[1] == "*") {
+	if(!array_key_exists($m[2], $this->domains))
+	  return array();
+
+	$members = $this->domains[$m[2]]->users();
+
+	if(!$members)
+	  return array();
+
+	foreach($members as $i=>$member)
+	  $members[$i]="{$member}@{$m[2]}";
+
+	return $members;
+      }
+      else
+	return array($group);
     }
 
     return array();
