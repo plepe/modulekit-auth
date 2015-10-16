@@ -219,6 +219,10 @@ class Auth {
   }
 
   function http_authenticate() {
+    // Executed from CLI - assume successful authentication
+    if(php_sapi_name() == "cli")
+      return true;
+
     if(isset($_SERVER['PHP_AUTH_USER']) &&
        ($this->authenticate($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) === true)) {
       return true;
