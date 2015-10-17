@@ -44,6 +44,13 @@ if(isset($auth_result)) {
     print "<pre>\n";
     print_r($auth->users());
     print "</pre>\n";
+
+$current_user = $auth->current_user();
+$current_user_settings = new AuthUserSettings($current_user, $auth_user_settings_config);
+print "<pre>\n";
+print_r($current_user_settings->data());
+print "</pre>\n";
+
     ?>
 
     <a href='test.php?auth=logout'>Logout</a>
