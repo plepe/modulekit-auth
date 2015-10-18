@@ -1,4 +1,5 @@
 <?php include "conf.php"; /* load a local configuration */ ?>
+<?php $modulekit_load[] = "auth-js"; ?>
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?php
 session_start();
@@ -12,6 +13,7 @@ if(isset($_REQUEST['logout']))
   $auth->clear_authentication();
 
 $current_user = $auth->current_user();
+$auth->export_js();
 
 $error = null;
 if(isset($auth_result)) {
@@ -31,6 +33,7 @@ if(isset($auth_result)) {
     <?php print modulekit_to_javascript(); /* pass modulekit configuration to JavaScript */ ?>
     <?php print modulekit_include_js(); /* prints all js-includes */ ?>
     <?php print modulekit_include_css(); /* prints all css-includes */ ?>
+    <?php print_add_html_headers(); /* prints all css-includes */ ?>
   </head>
   <body>
 <?php
