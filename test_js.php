@@ -1,4 +1,5 @@
 <?php include "conf.php"; /* load a local configuration */ ?>
+<?php $modulekit_load[] = "auth-js"; ?>
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?php
 session_start();
@@ -12,6 +13,7 @@ if(isset($_REQUEST['logout']))
   $auth->clear_authentication();
 
 $current_user = $auth->current_user();
+$auth->export_js();
 
 $error = null;
 if(isset($auth_result)) {
@@ -31,6 +33,21 @@ if(isset($auth_result)) {
     <?php print modulekit_to_javascript(); /* pass modulekit configuration to JavaScript */ ?>
     <?php print modulekit_include_js(); /* prints all js-includes */ ?>
     <?php print modulekit_include_css(); /* prints all css-includes */ ?>
+    <?php print_add_html_headers(); /* prints all css-includes */ ?>
+  <script type='text/javascript'>
+window.onload = function() {
+  var div = document.getElementById("userdata");
+
+  var ret = "";
+  ret += "ID: " + auth.current_user().id() + "\n";
+  ret += "Name: " + auth.current_user().name() + "\n";
+  ret += "Domain: " + auth.current_user().domain + "\n";
+  ret += "E-Mail: " + auth.current_user().email() + "\n";
+  ret += "Userdata: " + JSON.stringify(auth.current_user().data, null, '    ');
+
+  div.appendChild(document.createTextNode(ret));
+}
+  </script>
   </head>
   <body>
 <?php
@@ -46,14 +63,8 @@ if($error) {
     </form>
     <hr/>
     <?php
-$current_user = $auth->current_user();
-print "Userdata: <pre>\n";
-print_r($current_user);
-print "</pre><hr/>\n";
 
-$current_user_settings = new AuthUserSettings($current_user, $auth_user_settings_config);
-print "User Settings: <pre>\n";
-print_r($current_user_settings->data());
+print "Userdata: <pre id='userdata'>\n";
 print "</pre><hr/>\n";
 
 print "Users:\n";

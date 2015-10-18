@@ -233,4 +233,16 @@ class Auth {
       exit();
     }
   }
+
+  function _export_js($var_name) {
+    return "var {$var_name} = new Auth(null, " . $this->current_user->_export_js() . ");\n";
+  }
+
+  function export_js($var_name='auth') {
+    $ret  = "<script type='text/javascript'>\n";
+    $ret .= $this->_export_js($var_name);
+    $ret .= "</script>\n";
+
+    add_html_header($ret);
+  }
 }

@@ -30,4 +30,10 @@ class Auth_User {
 
     return null;
   }
+
+  function _export_js() {
+    return 'new Auth_User(' . json_encode($this->username) . ', ' .
+              json_encode($this->domain) . ', ' .
+              json_encode($this->data) . ')';
+  }
 }
