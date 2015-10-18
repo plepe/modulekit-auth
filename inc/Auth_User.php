@@ -32,8 +32,8 @@ class Auth_User {
   }
 
   function _export_js() {
-    return 'new Auth_User("' . htmlspecialchars($this->username) . '", ' .
-              '"' . htmlspecialchars($this->domain) . '", ' .
+    return 'new Auth_User(' . json_encode($this->username) . ', ' .
+              json_encode($this->domain) . ', ' .
               json_encode($this->data) . ')';
   }
 }
