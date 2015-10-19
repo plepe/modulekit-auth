@@ -40,6 +40,8 @@ if(isset($auth_result)) {
     <?php print_add_html_headers(); /* prints all css-includes */ ?>
   <script type='text/javascript'>
 window.onload = function() {
+  call_hooks("init");
+
   var div = document.getElementById("userdata");
 
   var ret = "";

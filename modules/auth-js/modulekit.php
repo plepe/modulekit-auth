@@ -6,6 +6,9 @@ $depend=array(
 );
 
 $include = array(
+  'php' => array(
+    'code.php',
+  ),
   'js'=>array(
     '*.js',
   ),
