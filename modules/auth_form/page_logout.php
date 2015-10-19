@@ -4,9 +4,9 @@ if(!class_exists("Page"))
 
 class Page_logout extends Page {
   function content() {
-    global $auth_form;
+    global $auth;
 
-    $auth_form->auth->clear_authentication();
+    $auth->clear_authentication();
 
     if(isset($this->param['return']))
       page_reload($this->param['return']);

@@ -1,11 +1,11 @@
 <?php
 class auth_form {
-  function __construct($auth) {
-    $this->auth = $auth;
+  function __construct() {
+    global $auth;
 
     $domains=array();
 
-    foreach($this->auth->domains() as $k=>$d) {
+    foreach($auth->domains() as $k=>$d) {
       $domains[] = $k;
     }
 
@@ -35,14 +35,16 @@ class auth_form {
       $data = $this->form->get_data();
 
       $this->auth_result =
-	$this->auth->authenticate($data['username'], $data['password'],
+	$auth->authenticate($data['username'], $data['password'],
         (isset($data['domain'])?$data['domain']:null));
     }
   }
 
   function show_status() {
-    if($this->auth->is_logged_in()) {
-      $user = $this->auth->current_user();
+    global $auth;
+
+    if($auth->is_logged_in()) {
+      $user = $auth->current_user();
 
       $ret  = "Logged in as {$user->name()}.";
 
@@ -68,7 +70,9 @@ class auth_form {
   }
 
   function show_form($return) {
-    if($this->auth->is_logged_in())
+    global $auth;
+
+    if($auth->is_logged_in())
       return "";
 
     $ret  = "<form method='post'>\n";

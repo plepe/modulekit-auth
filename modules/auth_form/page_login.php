@@ -4,9 +4,11 @@ if(!class_exists("Page"))
 
 class Page_login extends Page {
   function content() {
-    global $auth_form;
+    global $auth;
 
-    if($auth_form->auth->is_logged_in()) {
+    $auth_form = new auth_form();
+
+    if($auth->is_logged_in()) {
       if(isset($this->param['return']))
 	page_reload($this->param['return']);
 
