@@ -2,7 +2,7 @@
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?php
 session_start();
-$auth=new Auth();
+call_hooks("init");
 
 if(isset($_REQUEST['username'])) {
   $auth_result=$auth->authenticate($_REQUEST['username'], $_REQUEST['password']);
@@ -10,8 +10,6 @@ if(isset($_REQUEST['username'])) {
 
 if(isset($_REQUEST['logout']))
   $auth->clear_authentication();
-
-$current_user = $auth->current_user();
 
 $error = null;
 if(isset($auth_result)) {
@@ -46,9 +44,8 @@ if($error) {
     </form>
     <hr/>
     <?php
-$current_user = $auth->current_user();
 print "Userdata: <pre>\n";
-print_r($current_user);
+print_r($auth->current_user());
 print "</pre><hr/>\n";
 
 if(modulekit_loaded("modulekit-auth-user-settings")) {

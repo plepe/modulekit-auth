@@ -2,7 +2,7 @@
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?php
 session_start();
-$auth=new Auth();
+call_hooks("init");
 
 $auth->http_authenticate();
 

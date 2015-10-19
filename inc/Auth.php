@@ -1,6 +1,11 @@
 <?php
 class Auth {
   function __construct($config=null) {
+    global $auth;
+    if(isset($auth))
+      trigger_error("\$auth already set! Remove '\$auth = new Auth();' from your code!", E_USER_WARNING);
+    $auth = $this;
+
     if($config) {
       $this->config=$config;
     }
@@ -246,3 +251,7 @@ class Auth {
     add_html_header($ret);
   }
 }
+
+register_hook("init", function() {
+  new Auth();
+});

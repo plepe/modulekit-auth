@@ -3,7 +3,7 @@
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?php
 session_start();
-$auth=new Auth();
+call_hooks("init");
 
 if(isset($_REQUEST['username'])) {
   $auth_result=$auth->authenticate($_REQUEST['username'], $_REQUEST['password']);
