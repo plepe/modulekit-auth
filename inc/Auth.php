@@ -20,6 +20,8 @@ class Auth {
     else {
       $this->current_user=new Auth_User(null, null, array("name"=>"Anonymous"));
     }
+
+    call_hooks("auth_current_user", $this->current_user);
   }
 
   function current_user() {
@@ -29,6 +31,8 @@ class Auth {
   function set_current_user($user) {
     $this->current_user=$user;
     $_SESSION['auth_current_user']=array($user->username, $user->domain, $user->data);
+
+    call_hooks("auth_current_user", $this->current_user);
   }
 
   function is_logged_in() {
@@ -74,6 +78,7 @@ class Auth {
 
 	  $this->current_user = $user;
 	  $_SESSION['auth_current_user'] = $user;
+	  call_hooks("auth_current_user", $this->current_user);
 
 	  return true;
 	}
@@ -88,6 +93,7 @@ class Auth {
   function clear_authentication() {
     unset($_SESSION['auth_current_user']);
     $this->current_user=new Auth_User(null, null, array("name"=>"Anonymous"));
+    call_hooks("auth_current_user", $this->current_user);
   }
 
   function get_user($id) {
