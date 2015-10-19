@@ -36,4 +36,12 @@ class Auth_User {
               json_encode($this->domain) . ', ' .
               json_encode($this->data) . ')';
   }
+
+  function settings() {
+    if(!isset($this->_settings) &&
+       (modulekit_loaded("auth-user-settings")))
+      $this->_settings = new AuthUserSettings($this);
+
+    return $this->_settings;
+  }
 }

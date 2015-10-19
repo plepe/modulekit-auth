@@ -49,9 +49,8 @@ print_r($auth->current_user());
 print "</pre><hr/>\n";
 
 if(modulekit_loaded("modulekit-auth-user-settings")) {
-  $current_user_settings = new AuthUserSettings($current_user, $auth_user_settings_config);
   print "User Settings: <pre>\n";
-  print_r($current_user_settings->data());
+  print_r($auth->current_user()->settings()->data());
   print "</pre><hr/>\n";
 }
 
