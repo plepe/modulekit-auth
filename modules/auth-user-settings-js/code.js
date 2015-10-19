@@ -10,10 +10,19 @@ function AuthUserSettings(user, config, data) {
 }
 
 AuthUserSettings.prototype.load = function(callback) {
+  if(!modulekit_loaded("modulekit-ajax")) {
+    if(callback)
+      callback("'modulekit-ajax' not loaded - can't load from server");
+    return;
+  }
+
   ajax('auth_user_settings_js_load', {
     user: this.user.id()
   }, null, function(callback, result) {
     this._data = result;
+
+    if(callback)
+      callback(true);
   }.bind(this, callback));
 }
 
@@ -31,6 +40,12 @@ AuthUserSettings.prototype.save = function(data, callback) {
       delete(this._data[k]);
     else
       this._data[k] = data[k];
+  }
+
+  if(!modulekit_loaded("modulekit-ajax")) {
+    if(callback)
+      callback("'modulekit-ajax' not loaded - can't save to server");
+    return;
   }
 
   // call ajax to update server values
