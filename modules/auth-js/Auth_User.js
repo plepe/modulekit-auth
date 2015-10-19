@@ -30,8 +30,13 @@ Auth_User.prototype.email = function() {
 
 Auth_User.prototype.settings = function() {
   if(!this._settings &&
-     modulekit_loaded("modulekit-auth-user-settings-js"))
-    this._settings = new AuthUserSettings(this, null, _auth_user_settings_data);
+     modulekit_loaded("modulekit-auth-user-settings-js")) {
+    var data = null;
+    if(this == auth.current_user())
+      data = _auth_user_settings_data;
+
+    this._settings = new AuthUserSettings(this, null, data);
+  }
 
   return this._settings;
 }
