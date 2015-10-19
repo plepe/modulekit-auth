@@ -2,6 +2,11 @@ function AuthUserSettings(user, config, data) {
   this.user = user;
   this.config = config;
   this._data = data;
+
+  if(this._data === null) {
+    this._data = {};
+    this.load();
+  }
 }
 
 AuthUserSettings.prototype.load = function(callback) {
