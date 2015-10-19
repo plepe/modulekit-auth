@@ -22,3 +22,7 @@ function ajax_auth_user_settings_js_save($param, $post) {
 
   return true;
 }
+
+register_hook("auth_current_user", function($user) {
+  html_export_var(array("_auth_user_settings_data" => (object)$user->settings()->data()));
+});

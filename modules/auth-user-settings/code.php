@@ -73,16 +73,4 @@ class AuthUserSettings {
 
     return true;
   }
-
-  function _export_js($var_name) {
-    return "var {$var_name} = new AuthUserSettings(auth.current_user(), null, " . json_encode($this->data, JSON_FORCE_OBJECT) . ");\n";
-  }
-
-  function export_js($var_name="current_user_settings") {
-    $ret  = "<script type='text/javascript'>\n";
-    $ret .= $this->_export_js($var_name);
-    $ret .= "</script>\n";
-
-    add_html_header($ret);
-  }
 }

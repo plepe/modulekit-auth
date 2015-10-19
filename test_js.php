@@ -12,13 +12,6 @@ if(isset($_REQUEST['username'])) {
 if(isset($_REQUEST['logout']))
   $auth->clear_authentication();
 
-$current_user = $auth->current_user();
-$auth->export_js();
-if(modulekit_loaded("modulekit-auth-user-settings-js")) {
-  $current_user_settings = new AuthUserSettings($current_user, $auth_user_settings_config);
-  $current_user_settings->export_js();
-}
-
 $error = null;
 if(isset($auth_result)) {
   if($auth_result===false) {
@@ -55,7 +48,7 @@ window.onload = function() {
 
   if(modulekit_loaded("modulekit-auth-user-settings-js")) {
     var div = document.getElementById("usersettings");
-    var ret = JSON.stringify(current_user_settings.data(), null, '    ');
+    var ret = JSON.stringify(auth.current_user().settings().data(), null, '    ');
 
     div.appendChild(document.createTextNode(ret));
   }
