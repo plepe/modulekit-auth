@@ -23,6 +23,8 @@ function auth_user_menu() {
   }
   $ret .= "</div>\n";
 
+  call_hooks('auth_user_menu', $menu_entries);
+
   if(sizeof($menu_entries)) {
     $ret .= "<div class='menu'>\n";
     $menu_entries = weight_sort($menu_entries);

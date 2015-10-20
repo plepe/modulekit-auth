@@ -1,6 +1,7 @@
 <?php
 $depend = array(
-  'weight_sort'
+  'weight_sort',
+  'hooks'
 );
 
 $include = array(
