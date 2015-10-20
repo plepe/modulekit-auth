@@ -10,6 +10,7 @@ $ret  = "Userdata: <pre>\n";
 $ret .= print_r($auth->current_user(), 1);
 $ret .= "</pre><hr/>\n";
 
+Header("Content-Type: text/html; charset=utf-8");
 ?>
 <html>
   <head>

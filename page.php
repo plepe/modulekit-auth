@@ -23,6 +23,7 @@ else {
   $content = "Invalid page!";
 }
 
+Header("Content-Type: text/html; charset=utf-8");
 ?>
 <!DOCTYPE HTML>
 <html>

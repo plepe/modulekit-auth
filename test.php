@@ -21,6 +21,7 @@ if(isset($auth_result)) {
   }
 }
 
+Header("Content-Type: text/html; charset=utf-8");
 ?>
 <!DOCTYPE HTML>
 <html>
