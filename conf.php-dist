@@ -43,3 +43,5 @@ $auth_user_settings_config = array(
   'type' => 'file',
   'path' => 'data/',
 );
+
+$modulekit_load[] = "auth-user-menu";

@@ -23,6 +23,10 @@ else {
   $content = "Invalid page!";
 }
 
+$user_menu = "";
+if(modulekit_loaded('auth-user-menu'))
+  $user_menu = auth_user_menu();
+
 Header("Content-Type: text/html; charset=utf-8");
 ?>
 <!DOCTYPE HTML>
@@ -42,6 +46,7 @@ window.onload = function() {
   <body>
 <?php
 print $content;
+print $user_menu;
 ?>
   </body>
 </html>

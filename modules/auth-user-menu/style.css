@@ -1,0 +1,19 @@
+.auth_user_menu {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 2px;
+  min-width: 10em;
+}
+.auth_user_menu a {
+  text-decoration: none;
+}
+
+.auth_user_menu .info {
+  text-align: right;
+}
+.auth_user_menu .menu {
+  border: 1px solid black;
+  padding: 2px;
+  display: none;
+}
