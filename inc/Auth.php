@@ -246,7 +246,11 @@ class Auth {
   }
 
   function _export_js($var_name) {
-    return "var {$var_name} = new Auth(null, " . $this->current_user->_export_js() . ");\n";
+    $export_config = array('domains' => array());
+    foreach($this->config['domains'] as $domain=>$domain_config)
+      $export_config['domains'][$domain] = null;
+
+    return "var {$var_name} = new Auth(" . json_encode($export_config) . ", " . $this->current_user->_export_js() . ");\n";
   }
 
   function export_js($var_name='auth') {

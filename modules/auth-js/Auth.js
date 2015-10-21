@@ -36,3 +36,7 @@ Auth.prototype.clear_authentication = function(callback) {
     }.bind(this, callback)
   );
 }
+
+Auth.prototype.domains = function() {
+  return this.config.domains;
+}
