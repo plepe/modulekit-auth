@@ -1,3 +1,5 @@
+var auth_user_menu_login_form;
+
 function auth_user_menu_toggle(ev) {
   if(!ev)
     ev = window.event;
@@ -15,6 +17,9 @@ function auth_user_menu_toggle(ev) {
 }
 
 function auth_user_menu_login() {
+  if(auth_user_menu_login_form)
+    return false;
+
   var form_def = {
     'username': {
       'name': 'Username',
@@ -27,7 +32,7 @@ function auth_user_menu_login() {
     }
   };
 
-  var auth_form = new form('auth_form', form_def);
+  auth_user_menu_login_form = new form('auth_form', form_def);
 
   var div = document.createElement('form');
   div.method = 'post';
@@ -36,9 +41,9 @@ function auth_user_menu_login() {
   document.body.appendChild(div);
 
   if(modulekit_loaded("modulekit-auth-js") && modulekit_loaded("modulekit-ajax"))
-    div.onsubmit = auth_user_menu_login_submit.bind(this, auth_form);
+    div.onsubmit = auth_user_menu_login_submit;
 
-  auth_form.show(div);
+  auth_user_menu_login_form.show(div);
 
   var input = document.createElement('input');
   input.type = 'submit';
@@ -48,8 +53,8 @@ function auth_user_menu_login() {
   return false;
 }
 
-function auth_user_menu_login_submit(auth_form) {
-  var data = auth_form.get_data();
+function auth_user_menu_login_submit() {
+  var data = auth_user_menu_login_form.get_data();
 
   auth.authenticate(data.username, data.password, data.domain, null,
     function(result) {
