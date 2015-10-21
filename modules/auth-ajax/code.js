@@ -11,11 +11,16 @@ function auth_ajax_form() {
     }
   };
 
-  var auth_form = new form('auth', form_def);
+  var auth_form = new form('auth_form', form_def);
 
   var div = document.createElement('form');
+  div.method = 'post';
+  if(modulekit_loaded("auth_form"))
+    div.action = page_url({ page: 'login' });
   document.body.appendChild(div);
-  div.onsubmit = auth_ajax_form_submit.bind(this, auth_form);
+
+  if(modulekit_loaded("modulekit-auth-js") && modulekit_loaded("modulekit-ajax"))
+    div.onsubmit = auth_ajax_form_submit.bind(this, auth_form);
 
   auth_form.show(div);
 
