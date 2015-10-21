@@ -17,7 +17,7 @@ function auth_user_menu() {
     );
   }
   else {
-    $ret .= "<a href='?page=login'>Login</a>\n";
+    $ret .= "<a href='?page=login' onclick='return auth_user_menu_login()'>Login</a>\n";
     $ret .= "<a href='#' onclick='auth_user_menu_toggle()'>";
     $ret .= "⚙</a>";
   }
