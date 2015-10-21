@@ -35,6 +35,7 @@ function auth_user_menu_login() {
   auth_user_menu_login_form = new form('auth_form', form_def);
 
   var div = document.createElement('form');
+  div.id = 'auth_user_menu_form';
   div.method = 'post';
   div.action = page_url({ page: 'login' });
   document.body.appendChild(div);
