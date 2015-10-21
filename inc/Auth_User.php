@@ -14,6 +14,16 @@ class Auth_User {
     return "{$this->username}@{$this->domain}";
   }
 
+  function data($k=null) {
+    if($k === null)
+      return $this->data;
+
+    if(!array_key_exists($k, $this->data))
+      return null;
+
+    return $this->data[$k];
+  }
+
   function name() {
     if($this->username === null)
       return "Anonymous";

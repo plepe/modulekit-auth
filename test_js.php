@@ -43,7 +43,7 @@ window.onload = function() {
   ret += "Name: " + auth.current_user().name() + "\n";
   ret += "Domain: " + auth.current_user().domain + "\n";
   ret += "E-Mail: " + auth.current_user().email() + "\n";
-  ret += "Userdata: " + JSON.stringify(auth.current_user().data, null, '    ');
+  ret += "Userdata: " + JSON.stringify(auth.current_user().data(), null, '    ');
 
   div.appendChild(document.createTextNode(ret));
 

@@ -1,7 +1,7 @@
 function Auth_User(username, domain, data) {
   this.username = username;
   this.domain = domain;
-  this.data = data;
+  this._data = data;
 }
 
 Auth_User.prototype.id = function() {
@@ -11,19 +11,26 @@ Auth_User.prototype.id = function() {
   return this.username + "@" + this.domain;
 }
 
+Auth_User.prototype.data = function(k) {
+  if((k === null) || (k === undefined))
+    return this._data;
+
+  return this._data[k];
+}
+
 Auth_User.prototype.name = function() {
   if(this.username === null)
     return 'Anonymous';
 
-  if(this.data.name)
-    return this.data.name;
+  if(this._data.name)
+    return this._data.name;
 
   return this.username;
 }
 
 Auth_User.prototype.email = function() {
-  if(this.data.email)
-    return this.data.email;
+  if(this._data.email)
+    return this._data.email;
 
   return null;
 }
