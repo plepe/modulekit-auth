@@ -67,3 +67,17 @@ function auth_user_menu_login_submit() {
 
   return false;
 }
+
+function auth_user_menu_logout() {
+  if(!modulekit_loaded("modulekit-auth-js") || !modulekit_loaded("modulekit-ajax"))
+    return;
+
+  auth.clear_authentication(function(result) {
+    if(result === true)
+      location.reload();
+    else
+      alert(result);
+  });
+
+  return false;
+}

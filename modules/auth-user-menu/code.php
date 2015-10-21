@@ -12,6 +12,7 @@ function auth_user_menu() {
 
     $menu_entries[] = array(
       'href' => '?page=logout',
+      'onclick' => 'return auth_user_menu_logout()',
       'weight' => 10,
       'text' => 'Logout',
     );
