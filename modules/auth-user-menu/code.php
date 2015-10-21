@@ -26,12 +26,12 @@ function auth_user_menu() {
   call_hooks('auth_user_menu', $menu_entries);
 
   if(sizeof($menu_entries)) {
-    $ret .= "<div class='menu'>\n";
+    $ret .= "<ul class='menu'>\n";
     $menu_entries = weight_sort($menu_entries);
     foreach($menu_entries as $entry) {
-      $ret .= "<a href='{$entry['url']}'>{$entry['text']}</a>\n";
+      $ret .= "<li><a href='{$entry['url']}'>{$entry['text']}</a></li>\n";
     }
-    $ret .= "</div>\n";
+    $ret .= "</ul>\n";
   }
 
   $ret .= "</div>\n";

@@ -16,4 +16,9 @@
   border: 1px solid black;
   padding: 2px;
   display: none;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.auth_user_menu .menu li {
+  list-style-type: none;
 }
