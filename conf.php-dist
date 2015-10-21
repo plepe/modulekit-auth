@@ -37,11 +37,8 @@ $auth_config=array(
 // Note: '-d' uses a weak password algorithm; other htpasswd algorithms are not
 // compatible with PHP as of version 5.4
 
-#$modulekit_load[] = "modulekit-auth-user-settings";
-#$modulekit_load[] = "modulekit-auth-user-settings-js";
+// User settings configuration (if enabled)
 $auth_user_settings_config = array(
   'type' => 'file',
   'path' => 'data/',
 );
-
-$modulekit_load[] = "auth-user-menu";
