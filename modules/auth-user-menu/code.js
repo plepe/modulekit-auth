@@ -32,16 +32,19 @@ function auth_user_menu_login() {
     }
   };
 
-  var domains = [];
-  for(var k in auth.domains())
-    domains.push(k);
+  // TODO: what if domain selection mandatory? need to redirect to page login
+  if(modulekit_loaded('auth-js')) {
+    var domains = [];
+    for(var k in auth.domains())
+      domains.push(k);
 
-  if(domains.length > 1) {
-    form_def['domain'] = {
-      'name': 'Domain',
-      'type': 'select',
-      'values': domains
-    };
+    if(domains.length > 1) {
+      form_def['domain'] = {
+	'name': 'Domain',
+	'type': 'select',
+	'values': domains
+      };
+    }
   }
 
   auth_user_menu_login_form = new form('auth_form', form_def);
