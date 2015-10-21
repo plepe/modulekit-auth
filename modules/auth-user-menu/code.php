@@ -11,7 +11,7 @@ function auth_user_menu() {
     $ret .= " ⚙</a>";
 
     $menu_entries[] = array(
-      'url' => '?page=logout',
+      'href' => '?page=logout',
       'weight' => 10,
       'text' => 'Logout',
     );
@@ -29,7 +29,14 @@ function auth_user_menu() {
     $ret .= "<ul class='menu'>\n";
     $menu_entries = weight_sort($menu_entries);
     foreach($menu_entries as $entry) {
-      $ret .= "<li><a href='{$entry['url']}'>{$entry['text']}</a></li>\n";
+      $ret .= "<li><a";
+
+      if(array_key_exists('href', $entry))
+	$ret .= " href='{$entry['href']}'";
+      if(array_key_exists('onclick', $entry))
+	$ret .= " onclick='{$entry['onclick']}'";
+
+      $ret .= ">{$entry['text']}</a></li>\n";
     }
     $ret .= "</ul>\n";
   }
