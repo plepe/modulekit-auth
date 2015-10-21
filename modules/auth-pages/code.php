@@ -38,6 +38,13 @@ class auth_form {
 	$auth->authenticate($data['username'], $data['password'],
         (isset($data['domain'])?$data['domain']:null));
     }
+
+    if(isset($_REQUEST['return']))
+      $this->return = $_REQUEST['return'];
+    elseif(isset($_SERVER['HTTP_REFERER']))
+      $this->return = $_SERVER['HTTP_REFERER'];
+    else
+      $this->return = array();
   }
 
   function show_status() {
@@ -69,17 +76,14 @@ class auth_form {
     }
   }
 
-  function show_form($return) {
+  function show_form() {
     global $auth;
 
     if($auth->is_logged_in())
       return "";
 
     $ret  = "<form method='post'>\n";
-    $ret .= "<ul>\n";
     if ($this->form) {
-      $ret .= "  <li>Login:\n";
-
       if($this->auth_result === false) {
 	$ret .= "  <div class='field_errors'>\n";
 	$ret .= "Username or Password wrong\n";
@@ -91,9 +95,7 @@ class auth_form {
       $ret .= "  </li>\n";
     }
 
-    if($return !== null) {
-      $ret .= "<li><a href='?{$return}'>Continue anonymously</a>\n";
-    }
+    $ret .= "<input type='hidden' name='return' value='" . htmlspecialchars($this->return) . "'>\n";
 
     $ret .= "</ul>\n";
     $ret .= "</form>\n";

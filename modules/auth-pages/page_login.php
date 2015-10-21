@@ -15,6 +15,6 @@ class Page_login extends Page {
       return "<p><a href='?{$this->param['return']}'>Continue</a>";
     }
 
-    return $auth_form->show_form($this->param['return']);
+    return $auth_form->show_form();
   }
 }
