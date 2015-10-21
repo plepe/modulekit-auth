@@ -271,3 +271,10 @@ function ajax_auth_authenticate($param, $postdata) {
 
   return $auth->authenticate($param['username'], $postdata, $domain);
 }
+
+function ajax_auth_clear_authentication($param, $postdata) {
+  global $auth;
+
+  $auth->clear_authentication();
+  return true;
+}

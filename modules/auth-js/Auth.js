@@ -20,7 +20,19 @@ Auth.prototype.authenticate = function(username, password, domain, options, call
     password,
     function(callback, result) {
       // TODO: update current user
-      callback(result);
+      if(callback)
+	callback(result);
+    }.bind(this, callback)
+  );
+}
+
+Auth.prototype.clear_authentication = function(callback) {
+  ajax('auth_clear_authentication',
+    {},
+    null,
+    function(callback, result) {
+      if(callback)
+	callback(result);
     }.bind(this, callback)
   );
 }
