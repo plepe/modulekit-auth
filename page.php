@@ -9,9 +9,30 @@ class Page_default {
   function content() {
     global $auth;
 
-    return "<pre>" . print_r($auth->current_user(), 1) . "</pre>\n" .
-      "<a href='page.php?page=login'>Login</a> - " .
-      "<a href='page.php?page=logout'>Logout</a>";
+    $ret = "";
+
+    $ret .= "Userdata (PHP): <pre>\n";
+    $ret .= "ID: " . $auth->current_user()->id() . "\n";
+    $ret .= print_r($auth->current_user()->data(), 1);
+    $ret .= "</pre><hr/>\n";
+
+    if(modulekit_loaded("modulekit-auth-user-settings")) {
+      $ret .= "User Settings (PHP): <pre>\n";
+      $ret .= print_r($auth->current_user()->settings()->data(), 1);
+      $ret .= "</pre><hr/>\n";
+    }
+
+    if(modulekit_loaded("modulekit-auth-js")) {
+      $ret .= "Userdata (JS): <pre id='userdata'>\n";
+      $ret .= "</pre><hr/>\n";
+    }
+
+    if(modulekit_loaded("modulekit-auth-user-settings-js")) {
+      $ret .= "User Settings (JS): <pre id='usersettings'>\n";
+      $ret .= "</pre><hr/>\n";
+    }
+
+    return $ret;
   }
 }
 
@@ -40,6 +61,26 @@ Header("Content-Type: text/html; charset=utf-8");
   <script type='text/javascript'>
 window.onload = function() {
   call_hooks("init");
+
+  if(modulekit_loaded("modulekit-auth-js")) {
+    var div = document.getElementById("userdata");
+
+    var ret = "";
+    ret += "ID: " + auth.current_user().id() + "\n";
+    ret += "Name: " + auth.current_user().name() + "\n";
+    ret += "Domain: " + auth.current_user().domain + "\n";
+    ret += "E-Mail: " + auth.current_user().email() + "\n";
+    ret += "Userdata: " + JSON.stringify(auth.current_user().data(), null, '    ');
+
+    div.appendChild(document.createTextNode(ret));
+  }
+
+  if(modulekit_loaded("modulekit-auth-user-settings-js")) {
+    var div = document.getElementById("usersettings");
+    var ret = JSON.stringify(auth.current_user().settings().data(), null, '    ');
+
+    div.appendChild(document.createTextNode(ret));
+  }
 }
   </script>
   </head>
