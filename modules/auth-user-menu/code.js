@@ -36,8 +36,7 @@ function auth_user_menu_login() {
 
   var div = document.createElement('form');
   div.method = 'post';
-  if(modulekit_loaded("auth_form"))
-    div.action = page_url({ page: 'login' });
+  div.action = page_url({ page: 'login' });
   document.body.appendChild(div);
 
   if(modulekit_loaded("modulekit-auth-js") && modulekit_loaded("modulekit-ajax"))

@@ -1,7 +1,8 @@
 <?php
 $depend = array(
   'weight_sort',
-  'hooks'
+  'hooks',
+  'auth-pages',
 );
 
 $include = array(
