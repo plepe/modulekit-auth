@@ -86,7 +86,7 @@ class auth_form {
     if ($this->form) {
       if($this->auth_result === false) {
 	$ret .= "  <div class='field_errors'>\n";
-	$ret .= "Username or Password wrong\n";
+	$ret .= "Username or Password invalid.\n";
 	$ret .= "  </div>\n";
       }
 

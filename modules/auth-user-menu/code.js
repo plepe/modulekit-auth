@@ -59,6 +59,8 @@ function auth_user_menu_login_submit() {
     function(result) {
       if(result === true)
 	location.reload();
+      else if(result === false)
+	alert("Username or Password invalid.");
       else
 	alert(result);
     }
