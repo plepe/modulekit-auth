@@ -25,6 +25,13 @@ class AuthUserSettings {
     }
 
     switch($this->config['type']) {
+      case 'session':
+	if(!array_key_exists('auth_user_settings', $_SESSION))
+	  $this->data = array_key_exists('default_settings', $this->config) ? $this->config['default_settings'] : array();
+	else
+	  $this->data = $_SESSION['auth_user_settings'];
+	break;
+
       case 'file':
         if(file_exists($this->_path()))
           $this->data = json_decode(file_get_contents($this->_path()), true);
@@ -65,6 +72,10 @@ class AuthUserSettings {
     }
 
     switch($this->config['type']) {
+      case 'session':
+        $_SESSION['auth_user_settings'] = $this->data;
+	return true;
+
       case 'file':
         return file_put_contents($this->_path(), json_readable_encode($this->data)) !== false;
 
