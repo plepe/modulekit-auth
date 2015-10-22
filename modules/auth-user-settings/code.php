@@ -3,7 +3,12 @@ class AuthUserSettings {
   function __construct($user, $config=null) {
     if($config === null) {
       global $auth_user_settings_config;
-      $this->config = $auth_user_settings_config;
+      if(isset($auth_user_settings_config))
+	$this->config = $auth_user_settings_config;
+      else
+	$this->config = array(
+	  'type' => 'session'
+	);
     }
     else
       $this->config = $config;
