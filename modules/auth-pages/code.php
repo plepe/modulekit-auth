@@ -95,7 +95,7 @@ class auth_form {
       $ret .= "  </li>\n";
     }
 
-    $ret .= "<input type='hidden' name='return' value='" . htmlspecialchars($this->return) . "'>\n";
+    $ret .= html_export_to_input('return', $this->return);
 
     $ret .= "</ul>\n";
     $ret .= "</form>\n";
