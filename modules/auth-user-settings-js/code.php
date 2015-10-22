@@ -6,7 +6,7 @@ function ajax_auth_user_settings_js_load($param) {
     return "Authentication mismatch!";
   }
 
-  global $current_user_settings;
+  $current_user_settings = $auth->current_user->settings();
   return $current_user_settings->data();
 }
 
@@ -17,7 +17,7 @@ function ajax_auth_user_settings_js_save($param, $post) {
     return "Authentication mismatch!";
   }
 
-  global $current_user_settings;
+  $current_user_settings = $auth->current_user->settings();
   $current_user_settings->save(json_decode($post, true));
 
   return true;
