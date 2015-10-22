@@ -30,6 +30,8 @@ class Page_user_settings extends Page {
     $ret .= "<input type='submit' value='Save'>\n";
     if(array_key_exists('return', $this->param))
       $ret .= html_export_to_input('return', $this->param['return']);
+    elseif(isset($_SERVER['HTTP_REFERER']))
+      $ret .= html_export_to_input('return', $_SERVER['HTTP_REFERER']);
     $ret .= "</form>\n";
 
     return $ret;
