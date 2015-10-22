@@ -16,32 +16,37 @@ class AuthUserSettings {
   function load() {
     $id = $this->user->id();
 
-    // anonymous user
-    if($id === '') {
-      $this->data =
-        array_key_exists('anonymous_settings', $this->config) ? $this->config['anonymous_settings'] :
-        array_key_exists('default_settings', $this->config) ? $this->config['default_settings'] : array();
-      return;
-    }
+    $this->data = null;
 
     switch($this->config['type']) {
       case 'session':
-	if(!array_key_exists('auth_user_settings', $_SESSION))
-	  $this->data = array_key_exists('default_settings', $this->config) ? $this->config['default_settings'] : array();
-	else
+	if(array_key_exists('auth_user_settings', $_SESSION))
 	  $this->data = $_SESSION['auth_user_settings'];
 	break;
 
       case 'file':
         if(file_exists($this->_path()))
           $this->data = json_decode(file_get_contents($this->_path()), true);
-        else
-          $this->data = array_key_exists('default_settings', $this->config) ? $this->config['default_settings'] : array();
-
         break;
 
       default:
-        $this->data = array();
+        $this->data = null;
+    }
+
+    if($this->data === null) {
+      // anonymous user
+      if($id === '') {
+	$this->data =
+	  array_key_exists('anonymous_settings', $this->config) ? $this->config['anonymous_settings'] :
+	  array_key_exists('default_settings', $this->config) ? $this->config['default_settings'] :
+	  array();
+      }
+
+      else {
+	$this->data =
+	  array_key_exists('default_settings', $this->config) ? $this->config['default_settings'] :
+	  array();
+      }
     }
   }
 
