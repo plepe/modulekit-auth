@@ -15,6 +15,9 @@ class Page_user_settings extends Page {
       $auth->current_user()->settings()->save($data);
 
       $form->clear();
+
+      if(array_key_exists('return', $this->param))
+	page_reload($this->param['return']);
     }
     
     if($form->is_empty()) {
@@ -25,6 +28,8 @@ class Page_user_settings extends Page {
     $ret .= "<form method='post'>\n";
     $ret .= $form->show();
     $ret .= "<input type='submit' value='Save'>\n";
+    if(array_key_exists('return', $this->param))
+      $ret .= html_export_to_input('return', $this->param['return']);
     $ret .= "</form>\n";
 
     return $ret;
