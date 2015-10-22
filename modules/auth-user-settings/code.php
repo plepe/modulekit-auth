@@ -15,6 +15,9 @@ class AuthUserSettings {
 
     $this->user = $user;
 
+    if($this->user->id() === '')
+      $this->config['type'] = 'session';
+
     $this->load();
   }
 
