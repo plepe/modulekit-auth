@@ -1,10 +1,7 @@
 var auth_user_menu_login_form;
 
-function auth_user_menu_toggle(ev) {
-  if(!ev)
-    ev = window.event;
-
-  var parent_div = ev.target.parentNode.parentNode;
+function auth_user_menu_toggle(target) {
+  var parent_div = target.parentNode.parentNode;
 
   var menu = parent_div.getElementsByClassName("menu");
   for(var i = 0; i < menu.length; i++)

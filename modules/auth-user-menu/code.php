@@ -6,7 +6,7 @@ function auth_user_menu() {
   $ret  = "<div class='auth_user_menu'>\n";
   $ret .= "<div class='info'>\n";
   if($auth->is_logged_in()) {
-    $ret .= "<a href='#' onclick='return auth_user_menu_toggle()'>";
+    $ret .= "<a href='#' onclick='return auth_user_menu_toggle(this)'>";
     $ret .= htmlspecialchars($auth->current_user()->name());
     $ret .= " ⚙</a>";
 
@@ -19,7 +19,7 @@ function auth_user_menu() {
   }
   else {
     $ret .= "<a href='?page=login' onclick='return auth_user_menu_login()'>Login</a>\n";
-    $ret .= "<a href='#' onclick='return auth_user_menu_toggle()'>";
+    $ret .= "<a href='#' onclick='return auth_user_menu_toggle(this)'>";
     $ret .= "⚙</a>";
   }
   $ret .= "</div>\n";
