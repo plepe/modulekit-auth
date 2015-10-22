@@ -37,10 +37,3 @@ register_hook("auth_user_menu", function(&$entries) {
     'text' => 'Settings',
   );
 });
-
-register_hook("auth_user_settings_form", function(&$list) {
-  $list['foo'] = array(
-    'type'=>'text',
-    'name'=>'Foo'
-  );
-});
