@@ -1,4 +1,8 @@
 <?php
 $id = "modulekit-auth-pages";
 
-$depend=array("modulekit-form");
+$depend=array(
+  'modulekit-form',
+  'modulekit-auth',
+  'page',
+);

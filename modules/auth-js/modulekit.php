@@ -3,6 +3,7 @@ $id = 'modulekit-auth-js';
 
 $depend=array(
   'html',
+  'modulekit-auth',
 );
 
 $include = array(

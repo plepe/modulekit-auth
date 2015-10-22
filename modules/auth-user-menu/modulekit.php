@@ -5,6 +5,7 @@ $depend = array(
   'weight_sort',
   'hooks',
   'auth-pages',
+  'modulekit-auth',
 );
 
 $include = array(

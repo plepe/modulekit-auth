@@ -1,7 +1,10 @@
 <?php
 $id = "modulekit-auth-user-settings";
 
-$depend = array("json_readable_encode");
+$depend = array(
+  'json_readable_encode',
+  'modulekit-auth',
+);
 
 $include = array(
   'php' => array(
