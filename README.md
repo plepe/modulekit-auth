@@ -28,10 +28,10 @@ register_hook("auth_user_settings_form", function(&$form_def) {
 });
 ```
 
-auth-pages
-----------
+modulekit-auth-pages
+--------------------
 Pages for login / logout
 
-auth-user-menu
---------------
+modulekit-auth-user-menu
+------------------------
 Show login/user name on right upper corner + login/logout + more menu entries
