@@ -1,5 +1,9 @@
 <?php
 class Page_user_settings extends Page {
+  function title() {
+    return 'User settings';
+  }
+
   function content() {
     global $auth;
 
@@ -24,8 +28,7 @@ class Page_user_settings extends Page {
       $form->set_data($auth->current_user()->settings()->data());
     }
 
-    $ret .= "<h1>User settings</h1>";
-    $ret .= "<form method='post'>\n";
+    $ret  = "<form method='post'>\n";
     $ret .= $form->show();
     $ret .= "<input type='submit' value='Save'>\n";
     if(array_key_exists('return', $this->param))
