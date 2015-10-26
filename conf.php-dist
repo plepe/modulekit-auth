@@ -24,6 +24,10 @@ $auth_config=array(
   #'require-group' => "&group@default",
 );
 
+// Name for session - you should always use a unique ID for each app on the
+// same host
+# session_name('foobar');
+
 // groups my also be specified as 'user1@default' (where 'user1@default' is the
 // only member) or '&group@default', where the domain is queried for the member
 // list. You can also concatenate two or more users/groups together by
