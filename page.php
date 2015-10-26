@@ -11,6 +11,13 @@ class Page_default {
 
     $ret = "";
 
+    if(!modulekit_loaded('modulekit-auth-user-menu')) {
+      if($auth->is_logged_in())
+        print "<a href='?page=logout'>Logout</a><hr/>\n";
+      else
+        print "<a href='?page=login'>Login</a><hr/>\n";
+    }
+
     $ret .= "Userdata (PHP): <pre>\n";
     $ret .= "ID: " . $auth->current_user()->id() . "\n";
     $ret .= print_r($auth->current_user()->data(), 1);
