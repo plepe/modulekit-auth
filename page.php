@@ -44,6 +44,9 @@ else {
   $content = "Invalid page!";
 }
 
+if(method_exists($page, 'title'))
+  $title = $page->title();
+
 $user_menu = "";
 if(modulekit_loaded('auth-user-menu'))
   $user_menu = auth_user_menu();
@@ -91,6 +94,8 @@ window.onload = function() {
   </head>
   <body>
 <?php
+if(isset($title))
+  print "<h1>{$title}</h1>\n";
 print $content;
 print $user_menu;
 ?>
