@@ -6,7 +6,7 @@ function Auth_User(username, domain, data) {
 
 Auth_User.prototype.id = function() {
   if(this.username === null)
-    return '';
+    return '!';
 
   return this.username + "@" + this.domain;
 }

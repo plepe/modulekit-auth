@@ -15,7 +15,7 @@ class AuthUserSettings {
 
     $this->user = $user;
 
-    if($this->user->id() === '')
+    if($this->user->id() === '!')
       $this->config['type'] = 'session';
 
     $this->load();
@@ -43,7 +43,7 @@ class AuthUserSettings {
 
     if($this->data === null) {
       // anonymous user
-      if($id === '') {
+      if($id === '!') {
 	$this->data =
 	  array_key_exists('anonymous_settings', $this->config) ? $this->config['anonymous_settings'] :
 	  array_key_exists('default_settings', $this->config) ? $this->config['default_settings'] :

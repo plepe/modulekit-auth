@@ -9,7 +9,7 @@ class Auth_User {
 
   function id() {
     if($this->username === null)
-      return "";
+      return "!";
 
     return "{$this->username}@{$this->domain}";
   }

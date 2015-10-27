@@ -222,7 +222,7 @@ class Auth {
       $user=$this->current_user();
 
     if(($group === true) || ($group === '*'))
-      return ($user->id() !== "");
+      return ($user->id() !== "!");
 
     $members=$this->group_members($group);
 
