@@ -8,7 +8,7 @@ Auth.prototype.current_user = function() {
 }
 
 Auth.prototype.is_logged_in = function() {
-  return this._current_user.is_logged_in();
+  return this._current_user.id() != '';
 }
 
 Auth.prototype.authenticate = function(username, password, domain, options, callback) {
