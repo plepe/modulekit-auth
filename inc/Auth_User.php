@@ -41,6 +41,12 @@ class Auth_User {
     return null;
   }
 
+  function access($group) {
+    global $auth;
+
+    return $auth->access($group, $this);
+  }
+
   function _export_js() {
     return 'new Auth_User(' . json_encode($this->username) . ', ' .
               json_encode($this->domain) . ', ' .
