@@ -30,7 +30,7 @@ class Auth {
 
   function set_current_user($user) {
     $this->current_user=$user;
-    $_SESSION['auth_current_user']=array($user->username, $user->domain, $user->data);
+    $_SESSION['auth_current_user'] = $user;
 
     call_hooks("auth_current_user", $this->current_user);
   }
