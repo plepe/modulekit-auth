@@ -160,6 +160,10 @@ class Auth {
       return array();
     }
 
+    // anonymous user
+    if($group === '!')
+      return array('!');
+
     if(preg_match("/^&(.*)@(.*)$/", $group, $m)) {
       foreach($this->domains() as $d=>$domain_object) {
 	if(($m[2] === null) || ($d == $m[2])) {
