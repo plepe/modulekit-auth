@@ -182,7 +182,7 @@ class Auth {
 
     if(preg_match("/^(.*)@(.*)$/", $group, $m)) {
       if($m[1] == "*") {
-	if(!array_key_exists($m[2], $this->domains))
+	if(!array_key_exists($m[2], $this->domains()))
 	  return array();
 
 	$members = $this->domains[$m[2]]->users();
