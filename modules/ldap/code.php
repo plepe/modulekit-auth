@@ -16,7 +16,7 @@ class Auth_ldap extends Auth_default {
     if($this->connection)
       return $this->connection;
 
-    $this->connection=ldap_connect($this->config['host']);
+    $this->connection=ldap_connect($this->config['host'], array_key_exists('port', $this->config) ? $this->config['port'] : 389);
     ldap_set_option($this->connection, LDAP_OPT_PROTOCOL_VERSION, 3);
   }
 
