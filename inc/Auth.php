@@ -233,7 +233,7 @@ class Auth {
     return in_array($user->id(), $members);
   }
 
-  function http_authenticate() {
+  function http_authenticate($realm="My Realm") {
     // Executed from CLI - assume successful authentication
     if(php_sapi_name() == "cli")
       return true;
@@ -243,7 +243,7 @@ class Auth {
       return true;
     }
     else {
-      header('WWW-Authenticate: Basic realm="My Realm"');
+      header("WWW-Authenticate: Basic realm=\"{$realm}\"");
       header('HTTP/1.0 401 Unauthorized');
       exit();
     }
