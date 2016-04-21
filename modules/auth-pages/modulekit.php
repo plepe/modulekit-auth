@@ -5,4 +5,5 @@ $depend=array(
   'modulekit-form',
   'modulekit-auth',
   'page',
+  'csrf',
 );

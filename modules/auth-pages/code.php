@@ -31,7 +31,7 @@ class auth_form {
 
     $this->form = new form("auth_form", $this->form_def);
 
-    if($this->form->is_complete()) {
+    if($this->form->is_complete() && csrf_check_token(true)) {
       $data = $this->form->get_data();
 
       $this->auth_result =
@@ -84,6 +84,8 @@ class auth_form {
 
     $ret  = "<form method='post'>\n";
     if ($this->form) {
+      $ret .= csrf_show_token();
+
       if(isset($this->auth_result) && ($this->auth_result === false)) {
 	$ret .= "  <div class='field_errors'>\n";
 	$ret .= "Username or Password invalid.\n";
