@@ -18,6 +18,15 @@ class Auth_User {
     return "{$this->username}@{$this->domain}";
   }
 
+  // return true, if this user is logged in
+  function is_logged_in () {
+    if (!isset($_SESSION['auth_current_user'])) {
+      return false;
+    }
+
+    return $_SESSION['auth_current_user'] === $this;
+  }
+
   function data($k=null) {
     if($k === null)
       return $this->data;
