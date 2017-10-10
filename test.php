@@ -43,12 +43,20 @@ if($error) {
 ?>
 <?php
 print $auth_form->show_form();
+
+if ($auth->is_logged_in()) {
 ?>
     <form method='post'>
     <input type='submit' name='logout' value='Logout'>
     </form>
+<?php
+}
+?>
     <hr/>
     <?php
+
+print "\$auth->is_logged_in() -> " . ($auth->is_logged_in() ? 'true' : 'false');
+print "<hr/>\n";
 
 print "Userdata: <pre>\n";
 print_r($current_user);
