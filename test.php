@@ -1,12 +1,14 @@
 <?php include "conf.php"; /* load a local configuration */ ?>
+<?php
+$modulekit_load[] = 'auth_form';
+?>
 <?php include "modulekit/loader.php"; /* loads all php-includes */ ?>
 <?php
+call_hooks('init');
 session_start();
-$auth=new Auth();
 
-if(isset($_REQUEST['username'])) {
-  $auth_result=$auth->authenticate($_REQUEST['username'], $_REQUEST['password']);
-}
+$auth=new Auth();
+$auth_form = new auth_form($auth);
 
 if(isset($_REQUEST['logout']))
   $auth->clear_authentication();
@@ -31,6 +33,7 @@ if(isset($auth_result)) {
     <?php print modulekit_to_javascript(); /* pass modulekit configuration to JavaScript */ ?>
     <?php print modulekit_include_js(); /* prints all js-includes */ ?>
     <?php print modulekit_include_css(); /* prints all css-includes */ ?>
+    <?php print_add_html_headers(); /* print additional html headers */ ?>
   </head>
   <body>
 <?php
@@ -38,10 +41,10 @@ if($error) {
   print $error;
 }
 ?>
+<?php
+print $auth_form->show_form();
+?>
     <form method='post'>
-    Username: <input type='text' name='username' value='' autofocus /><br/>
-    Password: <input type='password' name='password' /><br/>
-    <input type='submit' value='Login'>
     <input type='submit' name='logout' value='Logout'>
     </form>
     <hr/>
