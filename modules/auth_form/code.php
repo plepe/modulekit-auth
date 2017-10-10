@@ -67,7 +67,7 @@ class auth_form {
     }
   }
 
-  function show_form($return) {
+  function show_form($return=null) {
     if($this->auth->is_logged_in())
       return "";
 
@@ -76,7 +76,7 @@ class auth_form {
     if ($this->form) {
       $ret .= "  <li>Login:\n";
 
-      if($this->auth_result === false) {
+      if(isset($this->auth_result) && $this->auth_result === false) {
 	$ret .= "  <div class='field_errors'>\n";
 	$ret .= "Username or Password wrong\n";
 	$ret .= "  </div>\n";
