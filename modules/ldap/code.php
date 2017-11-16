@@ -7,6 +7,8 @@ config: array(
 );
 */
 class Auth_ldap extends Auth_default {
+  public $usesUsernamePassword = true;
+
   function __construct($id, $config) {
     parent::__construct($id, $config);
     $this->connection=null;

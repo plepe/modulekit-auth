@@ -3,23 +3,30 @@ class auth_form {
   function __construct($auth) {
     $this->auth = $auth;
 
-    $domains=array();
+    $domains = array();
+    $this->nonUsernamePasswordDomains = array();
 
     foreach($this->auth->domains() as $k=>$d) {
-      $domains[] = $k;
+      if ($d->usesUsernamePassword) {
+        $domains[] = $k;
+      } else {
+        $this->nonUsernamePasswordDomains[] = $d;
+      }
     }
 
-    $this->form_def=array(
-      'username'	=>array(
-        'name'		=>"Username",
-	'type'		=>"text",
-	'html_attributes'=>array("autofocus"=>true),
-      ),
-      'password'	=>array(
-        'name'		=>"Password",
-	'type'		=>"password",
-      ),
-    );
+    if (sizeof($domains) > 0) {
+      $this->form_def=array(
+        'username'	=>array(
+          'name'		=>"Username",
+          'type'		=>"text",
+          'html_attributes'=>array("autofocus"=>true),
+        ),
+        'password'	=>array(
+          'name'		=>"Password",
+          'type'		=>"password",
+        ),
+      );
+    }
 
     if(sizeof($domains) > 1) {
       $this->form_def['domain'] = array(
@@ -29,14 +36,21 @@ class auth_form {
       );
     }
 
-    $this->form = new form("auth_form", $this->form_def);
+    if (sizeof($domains)) {
+      $this->form = new form("auth_form", $this->form_def);
 
-    if($this->form->is_complete()) {
-      $data = $this->form->get_data();
+      if($this->form->is_complete()) {
+        $data = $this->form->get_data();
 
-      $this->auth_result =
-	$this->auth->authenticate($data['username'], $data['password'],
-        (isset($data['domain'])?$data['domain']:null));
+        $this->auth_result =
+          $this->auth->authenticate($data['username'], $data['password'],
+          (isset($data['domain'])?$data['domain']:null));
+      }
+    }
+
+    if (isset($_REQUEST['login'])) {
+      $domain = array_keys($_REQUEST['login'])[0];
+      $this->auth->authenticate(null, null, $domain);
     }
   }
 
@@ -85,6 +99,10 @@ class auth_form {
       $ret .= $this->form->show();
       $ret .= "<input type='submit' value='Login'>\n";
       $ret .= "  </li>\n";
+    }
+
+    foreach ($this->nonUsernamePasswordDomains as $d) {
+      $ret .= "<li>{$d->name()}: <input type='submit' name='login[{$d->id}]' value='{$d->loginText()}'></li>\n";
     }
 
     if($return !== null) {
