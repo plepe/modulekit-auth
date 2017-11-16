@@ -14,6 +14,18 @@ $auth_config=array(
       'userdn'  => 'ou=people,dc=example,dc=com',
       'groupdn' => 'ou=groups,dc=example,dc=com',
     ),
+    'openstreetmap' => array(
+      'type' => 'oauth',
+      'name' => 'OpenStreetMap',
+      'req_url' => 'https://www.openstreetmap.org/oauth/request_token',
+      'authurl' => 'https://www.openstreetmap.org/oauth/authorize',
+      'acc_url' => 'https://www.openstreetmap.org/oauth/access_token',
+      'api_url' => 'http://api.openstreetmap.org/api/0.6/user/details',
+      'conskey' => '',
+      'conssec' => '',
+    ),
+    // use 'https://host/path/to/login.php?login[openstreetmap]=true' as
+    // callback url
   ),
   'groups'=>array(
     'admin'=>array('user1@default', 'user2@default'),
