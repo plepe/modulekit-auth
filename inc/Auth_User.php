@@ -30,6 +30,10 @@ class Auth_User {
     if(isset($this->data['email']))
       return $this->data['email'];
 
+    if ($this->_domain && $this->_domain->config['mail_domain']) {
+      return "{$this->username}@{$this->_domain->config['mail_domain']}";
+    }
+
     return null;
   }
 

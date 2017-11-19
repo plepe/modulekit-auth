@@ -5,7 +5,10 @@ $auth_config=array(
     // specify your domains here. These are just examples.
     'default'=>array(
       'type'=>"htpasswd",
-      'file'=>".htpasswd"
+      'file'=>".htpasswd",
+
+      // if no email address is set in .htpasswd, use "username@mail_domain"
+      'mail_domain' => 'example.com',
     ),
     'some_ldap_domain'=>array(
       'type'    => "ldap",
