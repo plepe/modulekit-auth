@@ -25,7 +25,9 @@ class Auth_oauth extends Auth_default {
     $r = $this->check_authentication();
 
     if ($r !== false && $_SESSION['auth'][$this->id]['username']) {
-      return new Auth_User($_SESSION['auth'][$this->id]['username'], $this->id, array('name' => $_SESSION['auth'][$this->id]['username']));
+      $user = new Auth_User($_SESSION['auth'][$this->id]['username'], $this->id, array('name' => $_SESSION['auth'][$this->id]['username']));
+      $user->set_domain($this);
+      return $user;
     }
   }
 

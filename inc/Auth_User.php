@@ -1,6 +1,8 @@
 <?php
 // username and domain are null for the anonymous user
 class Auth_User {
+  protected $_domain;
+
   function __construct($username, $domain, $data) {
     $this->username=$username;
     $this->domain=$domain;
@@ -29,5 +31,9 @@ class Auth_User {
       return $this->data['email'];
 
     return null;
+  }
+
+  function set_domain ($domain) {
+    $this->_domain = $domain;
   }
 }
