@@ -1,11 +1,11 @@
 <?php
 class auth_form {
-  function __construct() {
-    global $auth;
+  function __construct($auth) {
+    $this->auth = $auth;
 
     $domains=array();
 
-    foreach($auth->domains() as $k=>$d) {
+    foreach($this->auth->domains() as $k=>$d) {
       $domains[] = $k;
     }
 
@@ -35,7 +35,7 @@ class auth_form {
       $data = $this->form->get_data();
 
       $this->auth_result =
-	$auth->authenticate($data['username'], $data['password'],
+	$this->auth->authenticate($data['username'], $data['password'],
         (isset($data['domain'])?$data['domain']:null));
     }
 
@@ -48,10 +48,8 @@ class auth_form {
   }
 
   function show_status() {
-    global $auth;
-
-    if($auth->is_logged_in()) {
-      $user = $auth->current_user();
+    if($this->auth->is_logged_in()) {
+      $user = $this->auth->current_user();
 
       $ret  = "Logged in as {$user->name()}.";
 
@@ -76,17 +74,15 @@ class auth_form {
     }
   }
 
-  function show_form() {
-    global $auth;
-
-    if($auth->is_logged_in())
+  function show_form($return=null) {
+    if($this->auth->is_logged_in())
       return "";
 
     $ret  = "<form method='post'>\n";
     if ($this->form) {
       $ret .= csrf_show_token();
 
-      if(isset($this->auth_result) && ($this->auth_result === false)) {
+      if(isset($this->auth_result) && $this->auth_result === false) {
 	$ret .= "  <div class='field_errors'>\n";
 	$ret .= "Username or Password invalid.\n";
 	$ret .= "  </div>\n";

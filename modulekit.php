@@ -19,13 +19,12 @@ $default_include=array(
 if(!function_exists("modulekit_auth_check_modules")) {
   function modulekit_auth_check_modules() {
     global $auth_config;
+    $load=array();
 
     if(isset($auth_config)&&
        is_array($auth_config)&&
        isset($auth_config['domains'])&&
        is_array($auth_config['domains'])) {
-
-      $load=array();
 
       foreach($auth_config['domains'] as $c) {
         if(isset($c['type'])) {
