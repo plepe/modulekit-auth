@@ -1,5 +1,5 @@
 <?php
-class auth_form {
+class AuthPages {
   function __construct($auth) {
     $this->auth = $auth;
 

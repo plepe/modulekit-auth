@@ -6,7 +6,7 @@ class Page_login extends Page {
   function content() {
     global $auth;
 
-    $auth_form = new auth_form();
+    $auth_form = new AuthPages($auth);
 
     if($auth->is_logged_in()) {
       if(isset($this->param['return']))

@@ -8,7 +8,7 @@ session_start();
 call_hooks('init');
 
 $auth=new Auth();
-$auth_form = new auth_form($auth);
+$auth_form = new AuthPages($auth);
 
 if(isset($_REQUEST['logout']))
   $auth->clear_authentication();
