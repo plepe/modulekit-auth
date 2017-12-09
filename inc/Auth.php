@@ -21,6 +21,15 @@ class Auth {
     return $this->current_user;
   }
 
+  function current_domain() {
+    $domain_id = $this->current_user->domain;
+    if (!$domain_id) {
+      return null;
+    }
+
+    return $this->domains()[$domain_id];
+  }
+
   function set_current_user($user) {
     $this->current_user=$user;
     $_SESSION['auth_current_user']=array($user->username, $user->domain, $user->data);
