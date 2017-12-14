@@ -103,6 +103,14 @@ class AuthPages {
       }
 
       $ret .= $this->form->show();
+
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $d = $_POST;
+        unset($d['auth_form']);
+        unset($d['csrf_token']);
+        $ret .= $this->print_post_data($d);
+      }
+
       $ret .= "<input type='submit' value='Login'>\n";
       $ret .= "  </li>\n";
     }
@@ -119,6 +127,21 @@ class AuthPages {
 
     $ret .= "</ul>\n";
     $ret .= "</form>\n";
+
+    return $ret;
+  }
+
+  private function print_post_data ($data, $varname=null) {
+    $ret = '';
+
+    if (is_array($data)) {
+      foreach ($data as $k => $v) {
+        $ret .= $this->print_post_data($v, $varname === null ? $k : "{$varname}[{$k}]");
+      }
+    }
+    else {
+      $ret .= '<input type="hidden" name="' . htmlspecialchars($varname) . '" value="' . htmlspecialchars($data) . '"/>';
+    }
 
     return $ret;
   }
