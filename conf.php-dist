@@ -5,7 +5,10 @@ $auth_config=array(
     // specify your domains here. These are just examples.
     'default'=>array(
       'type'=>"htpasswd",
-      'file'=>".htpasswd"
+      'file'=>".htpasswd",
+
+      // if no email address is set in .htpasswd, use "username@mail_domain"
+      'mail_domain' => 'example.com',
     ),
     'some_ldap_domain'=>array(
       'type'    => "ldap",
@@ -14,6 +17,18 @@ $auth_config=array(
       'userdn'  => 'ou=people,dc=example,dc=com',
       'groupdn' => 'ou=groups,dc=example,dc=com',
     ),
+    'openstreetmap' => array(
+      'type' => 'oauth',
+      'name' => 'OpenStreetMap',
+      'req_url' => 'https://www.openstreetmap.org/oauth/request_token',
+      'authurl' => 'https://www.openstreetmap.org/oauth/authorize',
+      'acc_url' => 'https://www.openstreetmap.org/oauth/access_token',
+      'api_url' => 'http://api.openstreetmap.org/api/0.6/user/details',
+      'conskey' => '',
+      'conssec' => '',
+    ),
+    // use 'https://host/path/to/login.php?login[openstreetmap]=true' as
+    // callback url
   ),
   'groups'=>array(
     'admin'=>array('user1@default', 'user2@default'),

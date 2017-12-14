@@ -2,6 +2,7 @@
 // username and domain are null for the anonymous user
 class Auth_User {
   private $access_cache;
+  protected $_domain;
 
   function __construct($username, $domain, $data) {
     $this->username=$username;
@@ -51,6 +52,10 @@ class Auth_User {
     if(isset($this->data['email']))
       return $this->data['email'];
 
+    if ($this->_domain && $this->_domain->config['mail_domain']) {
+      return "{$this->username}@{$this->_domain->config['mail_domain']}";
+    }
+
     return null;
   }
 
@@ -79,5 +84,9 @@ class Auth_User {
       $this->_settings = new AuthUserSettings($this);
 
     return $this->_settings;
+  }
+
+  function set_domain ($domain) {
+    $this->_domain = $domain;
   }
 }

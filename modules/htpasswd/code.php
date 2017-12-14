@@ -28,7 +28,9 @@ class Auth_htpasswd extends Auth_default {
           if(isset($row[3]))
             $ret['email']=$row[3];
 
-          return new Auth_User($username, $this->id, $ret);
+          $user = new Auth_User($username, $this->id, $ret);
+          $user->set_domain($this);
+          return $user;
         }
         else
           return false;
@@ -57,11 +59,13 @@ class Auth_htpasswd extends Auth_default {
         if(isset($row[3]))
           $ret['email']=$row[3];
 
-        return new Auth_User(
+        $user = new Auth_User(
 	  $username,
 	  $this->id,
 	  $ret
 	);
+        $user->set_domain($this);
+        return $user;
       }
     }
 

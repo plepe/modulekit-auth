@@ -7,6 +7,8 @@ config: array(
 );
 */
 class Auth_ldap extends Auth_default {
+  public $usesUsernamePassword = true;
+
   function __construct($id, $config) {
     parent::__construct($id, $config);
     $this->connection=null;
@@ -46,13 +48,15 @@ class Auth_ldap extends Auth_default {
     if($result['count']==0)
       return null;
 
-    return new Auth_User(
+    $user = new Auth_User(
       $username,
       $this->id,
       array(
 	"name"=>$result[0]['displayname'][0],
 	"email"=>$result[0]['mail'][0],
       ));
+    $user->set_domain($this);
+    return $user;
   }
 
   function group_members($group) {

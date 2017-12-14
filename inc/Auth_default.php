@@ -1,5 +1,7 @@
 <?php
 class Auth_default {
+  public $usesUsernamePassword = true;
+
   function __construct($id, $config) {
     $this->id = $id;
     $this->config = $config;
@@ -15,6 +17,10 @@ class Auth_default {
    */
   function authenticate($username, $password, $options=array()) {
     return false;
+  }
+
+  function name () {
+    return isset($this->config['name']) ? $this->config['name'] : $this->id;
   }
 
   /**
