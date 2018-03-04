@@ -14,42 +14,56 @@ class Auth_wordpress extends Auth_default {
 
   function connect() {
     if (!$this->connection) {
-      define('WP_USE_THEMES', false);
-      include("{$this->config['path']}/wp-load.php");
-      $this->connection = true;
+      $this->connection = new PDO($this->config['dsn'], $this->config['username'], $this->config['password'], $this->config['options'] ?? array());
+      $this->prefix = $this->config['prefix'] ?? '';
     }
   }
 
   function authenticate($username, $password, $options=array()) {
     $this->connect();
 
-    $result = wp_authenticate($username, $password);
-
-    if (is_wp_error($result)) {
-      return false;
+    $res = $this->connection->query('select *, md5(' . $this->connection->quote($password) . ")=user_pass authenticated from {$this->prefix}users where user_status=0 and user_login=" . $this->connection->quote($username));
+    if ($result = $res->fetch()) {
+      return new Auth_User(
+        $username,
+        $this->id,
+        array(
+          "name"=>$result['display_name'],
+          "email"=>$result['user_email'],
+        ));
     }
 
-    return $this->get_user($username);
+    return false;
   }
 
   function get_user($username) {
-    $userinfo = get_user_by('login', $username);
+    $this->connect();
 
-    return new Auth_User(
-      $username,
-      $this->id,
-      array(
-	"name"=>$userinfo->data->display_name,
-	"email"=>$userinfo->data->user_email,
-      ));
+    $res = $this->connection->query("select * from {$this->prefix}users where user_status=0 and user_login=" . $this->connection->quote($username));
+    if ($result = $res->fetch()) {
+      return new Auth_User(
+        $username,
+        $this->id,
+        array(
+          "name"=>$result['display_name'],
+          "email"=>$result['user_email'],
+        ));
+    }
+
+    return null;
   }
 
   function group_members($group) {
     $this->connect();
     $ret = array();
 
-    foreach (get_users(array('role' => $group)) as $user) {
-      $ret[] = $user->user_login;
+    $res = $this->connection->query("select user_login, (select meta_value from {$this->prefix}usermeta where user_id=ID and meta_key='wp_capabilities') wp_capabilities from {$this->prefix}users where user_status=0");
+    if ($result = $res->fetch()) {
+      $groups = unserialize($result['wp_capabilities']);
+
+      if (in_array($group, $groups)) {
+        $ret[] = $result['user_login'];
+      }
     }
 
     return $ret;
@@ -59,8 +73,9 @@ class Auth_wordpress extends Auth_default {
     $this->connect();
     $ret = array();
 
-    foreach (get_users() as $user) {
-      $ret[] = $user->user_login;
+    $res = $this->connection->query("select user_login from {$this->prefix}users where user_status=0");
+    if ($result = $res->fetch()) {
+      $ret[] = $result['user_login'];
     }
 
     return $ret;
