@@ -58,10 +58,10 @@ class Auth_wordpress extends Auth_default {
     $ret = array();
 
     $res = $this->connection->query("select user_login, (select meta_value from {$this->prefix}usermeta where user_id=ID and meta_key='wp_capabilities') wp_capabilities from {$this->prefix}users where user_status=0");
-    if ($result = $res->fetch()) {
+    while ($result = $res->fetch()) {
       $groups = unserialize($result['wp_capabilities']);
 
-      if (in_array($group, $groups)) {
+      if (array_key_exists($group, $groups) && $groups[$group]) {
         $ret[] = $result['user_login'];
       }
     }
