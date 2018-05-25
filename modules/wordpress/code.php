@@ -10,12 +10,17 @@ class Auth_wordpress extends Auth_default {
   function __construct($id, $config) {
     parent::__construct($id, $config);
     $this->connection=null;
+
+    if (!array_key_exists('options', $this->config)) {
+      $this->config['options'] = array();
+    }
   }
 
   function connect() {
     if (!$this->connection) {
-      $this->connection = new PDO($this->config['dsn'], $this->config['username'], $this->config['password'], $this->config['options'] ?? array());
-      $this->prefix = $this->config['prefix'] ?? '';
+      $this->connection = new PDO($this->config['dsn'], $this->config['username'], $this->config['password'], $this->config['options']);
+      // $this->prefix = $this->config['prefix'] ?? ''; // PHP7.0
+      $this->prefix = array_key_exists('prefix', $this->config) ? $this->config['prefix'] : '';
     }
   }
 
