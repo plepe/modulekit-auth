@@ -25,10 +25,28 @@ class Auth_wordpress extends Auth_default {
   }
 
   function authenticate($username, $password, $options=array()) {
+    global $wp_hasher;
+
     $this->connect();
 
-    $res = $this->connection->query('select *, md5(' . $this->connection->quote($password) . ")=user_pass authenticated from {$this->prefix}users where user_status=0 and user_login=" . $this->connection->quote($username));
+    $res = $this->connection->query("select * from {$this->prefix}users where user_status=0 and user_login=" . $this->connection->quote($username));
     if ($result = $res->fetch()) {
+      if (strlen($result['user_pass']) === 32) {
+        if (md5($password) !== $result['user_pass']) {
+          return false;
+        }
+      }
+      else {
+        if (!isset($wp_hasher)) {
+          require_once $this->config['path'] . '/wp-includes/class-phpass.php';
+          $wp_hasher = new PasswordHash(8, true);
+        }
+
+        if (!$wp_hasher->CheckPassword($password, $result['user_pass'])) {
+          return false;
+        }
+      }
+
       return new Auth_User(
         $username,
         $this->id,
