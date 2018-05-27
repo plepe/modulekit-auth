@@ -55,7 +55,10 @@ print "\$auth->is_logged_in() -> " . ($auth->is_logged_in() ? 'true' : 'false');
 print "<hr/>\n";
 
 print "Userdata: <pre>\n";
-print_r($auth->current_user());
+$current_user = $auth->current_user();
+print_r($current_user());
+print "Name: " . htmlspecialchars($current_user->name()) . "<br>\n";
+print "E-Mail: " . htmlspecialchars($current_user->email()) . "<br>\n";
 print "</pre><hr/>\n";
 
 if(modulekit_loaded("modulekit-auth-user-settings")) {
