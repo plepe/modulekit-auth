@@ -28,7 +28,7 @@ function auth_ldap_authenticate($username, $password, $options=array()) {
     ldap_set_option($ldapconfig['conn'], LDAP_OPT_PROTOCOL_VERSION, 3);
   }
 
-  $fields = array("displayname", "mail");
+  $fields = array("displayname", "mail", "uid");
   if(isset($options['fields']))
     $fields = array_unique(array_merge($fields, $options['fields']));
 
@@ -42,7 +42,7 @@ function auth_ldap_authenticate($username, $password, $options=array()) {
     return false;
 
   $user_data = array(
-    "username"=>$username,
+    "username"=>$result[0]['uid'][0],
     "name"=>$result[0]['displayname'][0],
     "email"=>$result[0]['mail'][0],
   );

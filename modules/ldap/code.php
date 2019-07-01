@@ -42,14 +42,14 @@ class Auth_ldap extends Auth_default {
   function get_user($username) {
     $this->connect();
 
-    $r=ldap_list($this->connection, $this->config['userdn'], "uid={$username}", array("displayname", "mail"));
+    $r=ldap_list($this->connection, $this->config['userdn'], "uid={$username}", array("displayname", "mail", "uid"));
     $result=ldap_get_entries($this->connection, $r);
 
     if($result['count']==0)
       return null;
 
     $user = new Auth_User(
-      $username,
+      $result[0]['uid'][0],
       $this->id,
       array(
 	"name"=>$result[0]['displayname'][0],
