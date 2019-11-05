@@ -12,6 +12,10 @@ class Auth_ldap extends Auth_default {
   function __construct($id, $config) {
     parent::__construct($id, $config);
     $this->connection=null;
+
+    if (!array_key_exists('rdn_identifier', $this->config)) {
+      $this->config['rdn_identifier'] = 'uid';
+    }
   }
 
   function connect() {
@@ -33,7 +37,7 @@ class Auth_ldap extends Auth_default {
     if(!$ret)
       return false;
 
-    if(!ldap_bind($this->connection, "uid={$username},{$this->config['userdn']}", $password))
+    if(!ldap_bind($this->connection, "{$this->config['rdn_identifier']}={$username},{$this->config['userdn']}", $password))
       return false;
 
     return $ret;
@@ -42,7 +46,7 @@ class Auth_ldap extends Auth_default {
   function get_user($username) {
     $this->connect();
 
-    $r=ldap_list($this->connection, $this->config['userdn'], "uid={$username}", array("displayname", "mail", "uid"));
+    $r=ldap_list($this->connection, $this->config['userdn'], "{$this->config['rdn_identifier']}={$username}", array("displayname", "mail", "uid"));
     $result=ldap_get_entries($this->connection, $r);
 
     if($result['count']==0)

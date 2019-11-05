@@ -16,6 +16,8 @@ $auth_config=array(
       'basedn'  => 'dc=example,dc=com',
       'userdn'  => 'ou=people,dc=example,dc=com',
       'groupdn' => 'ou=groups,dc=example,dc=com',
+      // Optional settings:
+      'rdn_identifier' => 'uid', // e.g. *uid*=USER,ou=people,dc=example,dc=com
     ),
     'openstreetmap' => array(
       'type' => 'oauth',
