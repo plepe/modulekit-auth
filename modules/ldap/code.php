@@ -24,6 +24,11 @@ class Auth_ldap extends Auth_default {
 
     $this->connection=ldap_connect($this->config['host'], array_key_exists('port', $this->config) ? $this->config['port'] : 389);
     ldap_set_option($this->connection, LDAP_OPT_PROTOCOL_VERSION, 3);
+
+    if (array_key_exists('bind_user', $this->config) && $this->config['bind_user']) {
+      if(!ldap_bind($this->connection, $this->config['bind_user'], $this->config['bind_password']))
+        return false;
+    }
   }
 
   function authenticate($username, $password, $options=array()) {

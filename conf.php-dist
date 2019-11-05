@@ -18,6 +18,8 @@ $auth_config=array(
       'groupdn' => 'ou=groups,dc=example,dc=com',
       // Optional settings:
       'rdn_identifier' => 'uid', // e.g. *uid*=USER,ou=people,dc=example,dc=com
+      'bind_user' => '', // full DN of bind user
+      'bind_password' => '',
     ),
     'openstreetmap' => array(
       'type' => 'oauth',
