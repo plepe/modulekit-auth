@@ -15,7 +15,7 @@ class Auth {
     }
 
     if(isset($_SESSION['auth_current_user'])) {
-      $this->current_user = $_SESSION['auth_current_user'];
+      $this->current_user = $this->get_user($_SESSION['auth_current_user']);
     }
     else {
       $this->current_user=new Auth_User(null, null, array("name"=>"Anonymous"));
@@ -39,7 +39,7 @@ class Auth {
 
   function set_current_user($user) {
     $this->current_user=$user;
-    $_SESSION['auth_current_user'] = $user;
+    $_SESSION['auth_current_user'] = $user->id();
 
     call_hooks("auth_current_user", $this->current_user);
   }
@@ -86,7 +86,7 @@ class Auth {
 	  }
 
 	  $this->current_user = $user;
-	  $_SESSION['auth_current_user'] = $user;
+	  $_SESSION['auth_current_user'] = $user->id();
 	  call_hooks("auth_current_user", $this->current_user);
 
 	  return true;
