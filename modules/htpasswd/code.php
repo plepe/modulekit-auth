@@ -12,6 +12,7 @@ class Auth_htpasswd extends Auth_default {
     @$f=fopen($this->config['file'], "r");
     if(!$f) {
       $error=error_get_last();
+      trigger_error("Domain {$this->id}, can't open htpasswd file: {$error['message']}", E_USER_WARNING);
       return $error['message'];
     }
 
@@ -44,6 +45,7 @@ class Auth_htpasswd extends Auth_default {
     @$f=fopen($this->config['file'], "r");
     if(!$f) {
       $error=error_get_last();
+      trigger_error("Domain {$this->id}, can't open htpasswd file: {$error['message']}", E_USER_WARNING);
       return $error['message'];
     }
 
@@ -80,7 +82,8 @@ class Auth_htpasswd extends Auth_default {
     @$f=fopen($this->config['file'], "r");
     if(!$f) {
       $error=error_get_last();
-      return $error['message'];
+      trigger_error("Domain {$this->id}, can't open htpasswd file: {$error['message']}", E_USER_WARNING);
+      return array();
     }
 
     $ret=array();
