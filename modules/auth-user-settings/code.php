@@ -28,7 +28,7 @@ class AuthUserSettings {
 
     switch($this->config['type']) {
       case 'session':
-	if(array_key_exists('auth_user_settings', $_SESSION))
+	if(array_key_exists('auth_user_settings', $_SESSION ?? []))
 	  $this->data = $_SESSION['auth_user_settings'];
 	break;
 
