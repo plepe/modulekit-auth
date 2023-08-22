@@ -46,8 +46,8 @@ class AuthUserSettings {
       if($id === '!') {
 	$this->data =
 	  array_key_exists('anonymous_settings', $this->config) ? $this->config['anonymous_settings'] :
-	  array_key_exists('default_settings', $this->config) ? $this->config['default_settings'] :
-	  array();
+	  (array_key_exists('default_settings', $this->config) ? $this->config['default_settings'] :
+	  array());
       }
 
       else {
