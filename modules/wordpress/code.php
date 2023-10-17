@@ -32,7 +32,7 @@ class Auth_wordpress extends Auth_default {
     $res = $this->connection->query("select * from {$this->prefix}users where user_status=0 and user_login=" . $this->connection->quote($username));
     if ($result = $res->fetch()) {
       if (strlen($result['user_pass']) === 32) {
-        if (md5($password) !== $result['user_pass']) {
+        if (!hash_equals($result['user_pass'], md5($password))) {
           return false;
         }
       }

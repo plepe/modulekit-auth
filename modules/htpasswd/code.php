@@ -21,7 +21,7 @@ class Auth_htpasswd extends Auth_default {
       $row=explode(":", $row);
 
       if($row[0]==$username) {
-        if(crypt($password, $row[1])==$row[1]) {
+        if(hash_equals($row[1], crypt($password, $row[1]))) {
           $ret=array();
 
           if(isset($row[2]))
